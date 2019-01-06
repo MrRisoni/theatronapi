@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 03, 2019 at 09:26 PM
+-- Generation Time: Jan 06, 2019 at 09:04 AM
 -- Server version: 10.1.28-MariaDB
 -- PHP Version: 7.2.7
 
@@ -33,31 +33,33 @@ CREATE TABLE `authors` (
   `gen_name` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `authors`
+--
+
+INSERT INTO `authors` (`aut_id`, `gen_name`) VALUES
+(1, 'Henrik Ibsen'),
+(2, 'Anton Checkov');
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `flyway_schema_history`
+-- Table structure for table `characters`
 --
 
-CREATE TABLE `flyway_schema_history` (
-  `installed_rank` int(11) NOT NULL,
-  `version` varchar(50) DEFAULT NULL,
-  `description` varchar(200) NOT NULL,
-  `type` varchar(20) NOT NULL,
-  `script` varchar(1000) NOT NULL,
-  `checksum` int(11) DEFAULT NULL,
-  `installed_by` varchar(100) NOT NULL,
-  `installed_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `execution_time` int(11) NOT NULL,
-  `success` tinyint(1) NOT NULL
+CREATE TABLE `characters` (
+  `char_id` int(10) UNSIGNED NOT NULL,
+  `char_play_id` mediumint(8) UNSIGNED NOT NULL,
+  `char_title` varchar(40) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `flyway_schema_history`
+-- Dumping data for table `characters`
 --
 
-INSERT INTO `flyway_schema_history` (`installed_rank`, `version`, `description`, `type`, `script`, `checksum`, `installed_by`, `installed_on`, `execution_time`, `success`) VALUES
-(1, '00001', '2019 01 03 2031 create theaters genres authors', 'SQL', 'V00001__2019_01_03_2031_create_theaters_genres_authors.sql', -813698052, 'root', '2019-01-03 20:20:17', 143, 1);
+INSERT INTO `characters` (`char_id`, `char_play_id`, `char_title`) VALUES
+(1, 2, 'Uncle Vanya'),
+(2, 2, 'Astrov');
 
 -- --------------------------------------------------------
 
@@ -69,6 +71,77 @@ CREATE TABLE `genres` (
   `gen_id` tinyint(3) UNSIGNED NOT NULL,
   `gen_title` varchar(40) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `genres`
+--
+
+INSERT INTO `genres` (`gen_id`, `gen_title`) VALUES
+(3, 'Comedy'),
+(1, 'Drama'),
+(2, 'Tragedy');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `people`
+--
+
+CREATE TABLE `people` (
+  `ppl_id` int(10) UNSIGNED NOT NULL,
+  `ppl_title` varchar(55) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `people`
+--
+
+INSERT INTO `people` (`ppl_id`, `ppl_title`) VALUES
+(1, 'Κιμούλης');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `performance`
+--
+
+CREATE TABLE `performance` (
+  `per_id` bigint(20) UNSIGNED NOT NULL,
+  `per_play_id` mediumint(8) UNSIGNED NOT NULL,
+  `per_theater_id` int(10) UNSIGNED NOT NULL,
+  `per_director_id` int(10) UNSIGNED NOT NULL,
+  `per_duration` smallint(5) UNSIGNED NOT NULL,
+  `per_from_date` date NOT NULL,
+  `per_to_date` date NOT NULL,
+  `per_created_at` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `performance`
+--
+
+INSERT INTO `performance` (`per_id`, `per_play_id`, `per_theater_id`, `per_director_id`, `per_duration`, `per_from_date`, `per_to_date`, `per_created_at`) VALUES
+(1, 2, 2, 1, 120, '2019-01-10', '2019-03-06', '2019-01-06 00:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `plays`
+--
+
+CREATE TABLE `plays` (
+  `ply_id` mediumint(8) UNSIGNED NOT NULL,
+  `ply_title` varchar(40) NOT NULL,
+  `ply_author_id` mediumint(8) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `plays`
+--
+
+INSERT INTO `plays` (`ply_id`, `ply_title`, `ply_author_id`) VALUES
+(1, 'WIlduck', 1),
+(2, 'Uncle Vanya', 1);
 
 -- --------------------------------------------------------
 
@@ -84,15 +157,134 @@ CREATE TABLE `theaters` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
+-- Dumping data for table `theaters`
+--
+
+INSERT INTO `theaters` (`tht_id`, `tht_name`, `tht_address`, `tht_active`) VALUES
+(1, 'Χώρα', '', 1),
+(2, 'Δημοτικό Πειραιά', '', 1);
+
+--
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `flyway_schema_history`
+-- Indexes for table `authors`
 --
-ALTER TABLE `flyway_schema_history`
-  ADD PRIMARY KEY (`installed_rank`),
-  ADD KEY `flyway_schema_history_s_idx` (`success`);
+ALTER TABLE `authors`
+  ADD PRIMARY KEY (`aut_id`);
+
+--
+-- Indexes for table `characters`
+--
+ALTER TABLE `characters`
+  ADD PRIMARY KEY (`char_id`),
+  ADD KEY `char_play_id` (`char_play_id`);
+
+--
+-- Indexes for table `genres`
+--
+ALTER TABLE `genres`
+  ADD PRIMARY KEY (`gen_id`),
+  ADD UNIQUE KEY `gen_title` (`gen_title`);
+
+--
+-- Indexes for table `people`
+--
+ALTER TABLE `people`
+  ADD PRIMARY KEY (`ppl_id`);
+
+--
+-- Indexes for table `performance`
+--
+ALTER TABLE `performance`
+  ADD PRIMARY KEY (`per_id`),
+  ADD KEY `per_play_id` (`per_play_id`),
+  ADD KEY `per_theater_id` (`per_theater_id`),
+  ADD KEY `per_director_id` (`per_director_id`);
+
+--
+-- Indexes for table `plays`
+--
+ALTER TABLE `plays`
+  ADD PRIMARY KEY (`ply_id`),
+  ADD KEY `ply_author_id` (`ply_author_id`);
+
+--
+-- Indexes for table `theaters`
+--
+ALTER TABLE `theaters`
+  ADD PRIMARY KEY (`tht_id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `authors`
+--
+ALTER TABLE `authors`
+  MODIFY `aut_id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `characters`
+--
+ALTER TABLE `characters`
+  MODIFY `char_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `genres`
+--
+ALTER TABLE `genres`
+  MODIFY `gen_id` tinyint(3) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `people`
+--
+ALTER TABLE `people`
+  MODIFY `ppl_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `performance`
+--
+ALTER TABLE `performance`
+  MODIFY `per_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `plays`
+--
+ALTER TABLE `plays`
+  MODIFY `ply_id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `theaters`
+--
+ALTER TABLE `theaters`
+  MODIFY `tht_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `characters`
+--
+ALTER TABLE `characters`
+  ADD CONSTRAINT `characters_ibfk_1` FOREIGN KEY (`char_play_id`) REFERENCES `plays` (`ply_id`);
+
+--
+-- Constraints for table `performance`
+--
+ALTER TABLE `performance`
+  ADD CONSTRAINT `performance_ibfk_1` FOREIGN KEY (`per_director_id`) REFERENCES `people` (`ppl_id`),
+  ADD CONSTRAINT `performance_ibfk_2` FOREIGN KEY (`per_play_id`) REFERENCES `plays` (`ply_id`),
+  ADD CONSTRAINT `performance_ibfk_3` FOREIGN KEY (`per_theater_id`) REFERENCES `theaters` (`tht_id`);
+
+--
+-- Constraints for table `plays`
+--
+ALTER TABLE `plays`
+  ADD CONSTRAINT `plays_ibfk_1` FOREIGN KEY (`ply_author_id`) REFERENCES `authors` (`aut_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

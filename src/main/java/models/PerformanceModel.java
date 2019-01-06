@@ -17,6 +17,11 @@ public class PerformanceModel {
     private PlayModel play;
 
 
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn (name="per_director_id")
+    private PeopleModel director;
+
+
     public PerformanceModel()
     {}
 
@@ -34,6 +39,10 @@ public class PerformanceModel {
         return play;
     }
 
+
+    public PeopleModel getDirector() {
+        return director;
+    }
 
   
 }

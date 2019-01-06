@@ -15,6 +15,10 @@ public class ActorsModel {
     @JoinColumn (name="act_people_id")
     private PeopleModel human;
 
+    
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn (name="act_character_id")
+    private CharacterModel role;
   
     public ActorsModel()
     {}
@@ -32,6 +36,9 @@ public class ActorsModel {
         return human;
     }
   
+    public CharacterModel getRole() {
+        return role;
+    }
 
    
 }

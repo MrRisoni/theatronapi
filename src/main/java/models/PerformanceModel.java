@@ -34,6 +34,18 @@ public class PerformanceModel {
     @JoinColumn(name = "act_performance_id")
     private List<ActorsModel> actorsList;
 
+
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "pri_performance_id")
+    private List<PricingModel> pricesList;
+
+
+
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "prd_performance_id")
+    private List<PerformanceDateModel> datesList;
+
+
     public PerformanceModel()
     {}
 
@@ -61,9 +73,17 @@ public class PerformanceModel {
     }
 
 
-    public List<ActorsModel> getActors() {
+
+    public List<PricingModel> getPricesList() {
+        return pricesList;
+    }
+
+
+    public List<ActorsModel> getActorsList() {
         return actorsList;
     }
 
-  
+    public List<PerformanceDateModel> getDatesList() {
+        return datesList;
+    }
 }

@@ -18,6 +18,8 @@
         <mapping class="models.CharacterModel"/>
         <mapping class="models.ActorsModel"/>
         <mapping class="models.TypeModel"/>
+        <mapping class="models.ZoneModel"/>
+        <mapping class="models.PricingModel"/>
         <mapping class="models.OrderModel"/>
         <mapping class="models.OrderItemModel"/>
         <mapping class="models.PerformanceDateModel"/>

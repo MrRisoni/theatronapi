@@ -10,6 +10,7 @@ import models.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.criterion.Order;
 import org.hibernate.query.Query;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,9 +19,11 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Root;
 
+
+
+@CrossOrigin
 @RestController
 public class PerformancesController {
-
 
     @RequestMapping("/api/performances")
     public String getPerformancesList()
@@ -98,7 +101,7 @@ public class PerformancesController {
             }
 
 
-            return  ow.writeValueAsString(prfList);
+            return  ow.writeValueAsString(prfList.get(0));
 
         }
         catch(Exception ex)

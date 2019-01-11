@@ -4,14 +4,19 @@ import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import models.OrderModel;
 import models.PerformanceModel;
 import models.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.criterion.Order;
+import org.hibernate.query.Query;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.JoinType;
+import javax.persistence.criteria.Root;
 
 @RestController
 public class PerformancesController {
@@ -49,6 +54,33 @@ public class PerformancesController {
         }
     }
 
+    @RequestMapping("/api/seats") ///perf_id/date
+    public String getFreeSeats()
+    {
+        Session session = null;
+        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            String q= " SELECT itm_seatno FROM order_item " +
+                    "JOIN orders ON ord_id = itm_order_id " +
+                    "WHERE itm_void =0 " +
+                    "AND ord_void =0 " +
+                    "AND ord_performance_id =1 " +
+                    "AND ord_date = '2019-01-07'";
+
+            return  ow.writeValueAsString(session.createNativeQuery(q)
+                    .getResultList());
+
+
+        }
+        catch(Exception ex)
+        {
+            ex.printStackTrace();
+
+            return ex.getMessage();
+        }
+    }
 
 
     @RequestMapping("/api/performance")
@@ -64,6 +96,7 @@ public class PerformancesController {
             for (PerformanceModel prf : prfList) {
                 System.out.println(prf);
             }
+
 
             return  ow.writeValueAsString(prfList);
 

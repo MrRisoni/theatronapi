@@ -1,4 +1,4 @@
-package book.pojos;
+package hello.bookPojos;
 
 public class Order {
 

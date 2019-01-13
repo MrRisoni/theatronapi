@@ -1,9 +1,10 @@
-package book.pojos;
+package hello.bookPojos;
 
 public class Seat {
 
     private String seatNo;
     private String paxType;
+
 
     public Seat()
     {

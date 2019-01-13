@@ -1,15 +1,16 @@
 package pay;
 
-import book.pojos.BookPayload;
+import hello.bookPojos.BookPayload;
 import com.google.gson.Gson;
 import general.HttpRequests;
+import hello.bookPojos.Card;
 import org.apache.http.HttpResponse;
 import org.apache.http.impl.client.BasicResponseHandler;
 
 public class Payment {
 
     private HttpRequests httpReq;
-    private BookPayload pl;
+    private Card cardDetails;
 
     public Payment(HttpRequests http)
     {
@@ -20,15 +21,32 @@ public class Payment {
         this.httpReq = httpReq;
     }
 
-    public void setPayload(BookPayload pl) {
-        this.pl = pl;
+
+    public Card getCardDetails() {
+        return cardDetails;
+    }
+
+    public void setCardDetails(Card cardDetails) {
+        this.cardDetails = cardDetails;
+    }
+
+
+    public PaymentResponse voidTransaction()
+    {
+        return null;
+    }
+
+
+    public PaymentResponse refundTransaction()
+    {
+        return null;
     }
 
     public PaymentResponse settle()
     {
         PaymentResponse payRsp = new PaymentResponse();
         try {
-            HttpResponse rsp = this.httpReq.makeRequest(this.pl);
+            HttpResponse rsp = this.httpReq.makeRequest(this.cardDetails);
             String responseString = new BasicResponseHandler().handleResponse(rsp);
 
             Gson g = new Gson();

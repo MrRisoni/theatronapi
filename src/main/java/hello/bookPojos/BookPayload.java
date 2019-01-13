@@ -1,12 +1,15 @@
-package book.pojos;
+package hello.bookPojos;
 
 import java.util.ArrayList;
 
+// data posted for Vue.js
 public class BookPayload {
 
     private Order details;
 
     private ArrayList<Seat> seatList;
+
+    private Card cardData;
 
 
     public BookPayload()
@@ -14,6 +17,14 @@ public class BookPayload {
 
     }
 
+
+    public Card getCardData() {
+        return cardData;
+    }
+
+    public void setCardData(Card cardData) {
+        this.cardData = cardData;
+    }
 
     public Order getDetails() {
         return details;

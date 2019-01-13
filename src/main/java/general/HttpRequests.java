@@ -1,7 +1,6 @@
 package general;
 
-import book.pojos.BookPayload;
-import org.apache.http.HttpEntity;
+import hello.bookPojos.Card;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
@@ -9,8 +8,6 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
 
 import com.google.gson.Gson;
-
-import java.awt.print.Book;
 
 
 public class HttpRequests {
@@ -24,7 +21,7 @@ public class HttpRequests {
     }
 
 
-    public HttpResponse makeRequest(BookPayload pl)
+    public HttpResponse makeRequest(Card pl)
     {
         try {
             HttpClient httpClient = HttpClientBuilder.create().build();

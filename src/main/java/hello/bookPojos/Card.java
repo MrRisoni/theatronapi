@@ -1,4 +1,4 @@
-package book.pojos;
+package hello.bookPojos;
 
 public class Card {
 
@@ -14,12 +14,15 @@ public class Card {
 
     private String type;
 
+
     public Card(){};
 
 
     public String getNumber() {
         return number;
     }
+
+
 
     public void setNumber(String number) {
         this.number = number;

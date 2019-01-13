@@ -17,3 +17,5 @@ README.html
 .idea
 .vscode
 /node_modules
+.mvn/wrapper
+spring_app.log

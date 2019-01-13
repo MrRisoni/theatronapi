@@ -4,20 +4,14 @@ import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
-import models.OrderModel;
 import models.PerformanceModel;
 import models.HibernateUtil;
 import org.hibernate.Session;
-import org.hibernate.criterion.Order;
-import org.hibernate.query.Query;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.JoinType;
-import javax.persistence.criteria.Root;
 
 
 
@@ -25,7 +19,7 @@ import javax.persistence.criteria.Root;
 @RestController
 public class PerformancesController {
 
-    @RequestMapping("/api/performances")
+    @RequestMapping(value=  "/api/performances" , method = RequestMethod.POST)
     public String getPerformancesList()
     {
         Session session = null;
@@ -57,7 +51,7 @@ public class PerformancesController {
         }
     }
 
-    @RequestMapping("/api/seats") ///perf_id/date
+    @RequestMapping(value=  "/api/seats" , method = RequestMethod.POST) ///perf_id/date
     public String getFreeSeats()
     {
         Session session = null;
@@ -86,7 +80,7 @@ public class PerformancesController {
     }
 
 
-    @RequestMapping("/api/performance")
+    @RequestMapping(value= "/api/performance" ,method = RequestMethod.POST)
     public String getPerformance()
     {
         Session session = null;

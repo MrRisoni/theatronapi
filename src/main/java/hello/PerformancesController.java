@@ -1,25 +1,31 @@
 package hello;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import models.PerformanceModel;
 import models.HibernateUtil;
+import models.SeatMapModel;
 import org.hibernate.Session;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 
-
-
 @CrossOrigin
 @RestController
 public class PerformancesController {
 
-    @RequestMapping(value=  "/api/performances" , method = RequestMethod.POST)
+    @RequestMapping(value=  "/api/performances" , method = RequestMethod.GET)
     public String getPerformancesList()
     {
         Session session = null;
@@ -51,7 +57,35 @@ public class PerformancesController {
         }
     }
 
-    @RequestMapping(value=  "/api/seats" , method = RequestMethod.POST) ///perf_id/date
+
+    @RequestMapping(value=  "/api/seatmap" , method = RequestMethod.GET)
+    public String getSeatMap()
+    {
+        try {
+
+            Session session =  HibernateUtil.getSessionFactory().openSession();
+
+            ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+            System.out.println("ob writer  ");
+
+            List<SeatMapModel> seatMapData = session.createCriteria(SeatMapModel.class).list();
+            System.out.println("query ");
+
+            return  ow.writeValueAsString(seatMapData);
+        }
+        catch (Exception ex)
+        {
+            System.out.println("ERROR ");
+
+            System.out.println(ex.getMessage());
+           ex.printStackTrace();
+
+            return ex.getMessage();
+        }
+
+    }
+
+    @RequestMapping(value=  "/api/seats" , method = RequestMethod.GET) ///perf_id/date
     public String getFreeSeats()
     {
         Session session = null;
@@ -80,7 +114,7 @@ public class PerformancesController {
     }
 
 
-    @RequestMapping(value= "/api/performance" ,method = RequestMethod.POST)
+    @RequestMapping(value= "/api/performance" ,method = RequestMethod.GET)
     public String getPerformance()
     {
         Session session = null;

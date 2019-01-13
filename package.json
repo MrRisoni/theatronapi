@@ -1,0 +1,14 @@
+{
+  "name": "fakeNode.jsAPI",
+  "version": "1.0.0",
+  "description": "Fake Server",
+  "main": "fakeBanks.js",
+  "repository": "",
+  "author": "phoenix <vanguelisk@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "moment": "^2.22.2"
+  }
+}

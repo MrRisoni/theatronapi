@@ -28,6 +28,12 @@ public class SeatMapModel {
 
 
 
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn (name="smp_zoneid")
+    private ZoneModel zoneInfo;
+
+
+
 
     public SeatMapModel(){}
 
@@ -55,5 +61,10 @@ public class SeatMapModel {
 
     public String getSeatName() {
         return seatName;
+    }
+
+
+    public ZoneModel getZoneInfo() {
+        return zoneInfo;
     }
 }

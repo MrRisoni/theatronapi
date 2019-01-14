@@ -17,6 +17,8 @@ public class ZoneModel {
     private String title;
 
 
+    @Column(name = "zon_csscolor")
+    private String cssColor;
     
 
     public ZoneModel()
@@ -31,5 +33,10 @@ public class ZoneModel {
 
     public String getTitle() {
         return title;
+    }
+
+
+    public String getCss() {
+        return cssColor;
     }
 }

@@ -28,16 +28,7 @@ public class SeatMapController {
             System.out.println("ob writer  ");
 
 
-            SeatMapping smp = new SeatMapping();
-            smp.setCols(session.createNativeQuery("SELECT DISTINCT(smp_colid) FROM seatmap ")
-                    .getResultList());
-
-            smp.setRows(session.createNativeQuery("SELECT DISTINCT(smp_rowid) FROM seatmap ")
-                    .getResultList());
-
-            smp.setMappings( session.createCriteria(SeatMapModel.class).list());
-
-            return  ow.writeValueAsString(smp);
+            return  ow.writeValueAsString(session.createCriteria(SeatMapModel.class).list());
 
 
         }

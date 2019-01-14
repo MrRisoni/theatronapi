@@ -45,7 +45,6 @@ public class PerformancesController {
                     " AND  p.per_to_date >= CURRENT_DATE ";
             List<Object[]> persons = session.createNativeQuery(q)
                     .getResultList();
-
             return  ow.writeValueAsString(persons);
 
         }
@@ -73,6 +72,7 @@ public class PerformancesController {
             for (PerformanceModel prf : prfList) {
                 System.out.println(prf);
             }
+
 
 
             return  ow.writeValueAsString(prfList.get(0));

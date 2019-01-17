@@ -4,6 +4,7 @@ public class SeatAttributes {
 
     private String seatName;
     private String zoneCss;
+    private int zoneId;
 
     public SeatAttributes()
     {
@@ -25,5 +26,14 @@ public class SeatAttributes {
 
     public void setZoneCss(String zoneCss) {
         this.zoneCss = zoneCss;
+    }
+
+
+    public int getZoneId() {
+        return zoneId;
+    }
+
+    public void setZoneId(int zoneId) {
+        this.zoneId = zoneId;
     }
 }

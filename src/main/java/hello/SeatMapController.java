@@ -55,11 +55,12 @@ public class SeatMapController {
 
                 for (SeatMapModel sMdl : results) {
                     if (sMdl.getRowId() == rowId) {
-                        SeatAttributes str = new SeatAttributes();
-                        str.setSeatName(sMdl.getSeatName());
-                        str.setZoneCss(sMdl.getZoneInfo().getCss());
+                        SeatAttributes stAtr = new SeatAttributes();
+                        stAtr.setSeatName(sMdl.getSeatName());
+                        stAtr.setZoneCss(sMdl.getZoneInfo().getCss());
+                        stAtr.setZoneId(sMdl.getZoneInfo().getId());
 
-                        colMappings.put(sMdl.getColId(), str);
+                        colMappings.put(sMdl.getColId(), stAtr);
                     }
                 }
 

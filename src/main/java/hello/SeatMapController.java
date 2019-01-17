@@ -30,6 +30,18 @@ public class SeatMapController {
 
             Session session =  HibernateUtil.getSessionFactory().openSession();
 
+            String q= " SELECT MAX(smp_rowid) AS maxId, MIN(smp_rowid) AS minId " +
+                    "FROM  seatmap " +
+                    "WHERE smp_theater_id = 1 ";
+
+            List<Object[]> resultsMaxMin = session.createNativeQuery(q).getResultList();
+            System.out.println(resultsMaxMin);
+            short maxId = (Short) resultsMaxMin.get(0)[0];
+            short minId = (Short) resultsMaxMin.get(0)[1];
+
+            System.out.println(minId + " " + maxId);
+
+
             ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
             System.out.println("ob writer  ");
 
@@ -37,8 +49,8 @@ public class SeatMapController {
             session.close();
 
 
-            Map<Integer, Map<Integer, SeatAttributes>> rowMappings = new HashMap<>();
-            for (int rowId = 1; rowId < 25; rowId++) {
+            Map<Short, Map<Integer, SeatAttributes>> rowMappings = new HashMap<>();
+            for (short rowId = minId; rowId < maxId; rowId++) {
                 Map<Integer, SeatAttributes> colMappings = new HashMap<>();
 
                 for (SeatMapModel sMdl : results) {
@@ -55,43 +67,8 @@ public class SeatMapController {
             }
 
 
-           /* Map<Integer, SeatAttributes> colMapping = new HashMap<>();
-            ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
 
-            SeatAttributes atr1  = new SeatAttributes();
-            atr1.setSeatName("GOO");
-            atr1.setZoneCss("4554ff");
-
-            colMapping.put(2,atr1);
-
-            SeatAttributes atr2  = new SeatAttributes();
-            atr1.setSeatName("FOO");
-            atr1.setZoneCss("ff09gh");
-
-            colMapping.put(3,atr2);
-
-
-            Map<Integer, Map<Integer, SeatAttributes>> rowMapping = new HashMap<>();
-            rowMapping.put(1, colMapping);
-
-
-            //
-            SeatAttributes atr3  = new SeatAttributes();
-            atr1.setSeatName("boo");
-            atr1.setZoneCss("45f");
-
-            colMapping.put(5,atr3);
-
-            SeatAttributes atr4  = new SeatAttributes();
-            atr1.setSeatName("loo");
-            atr1.setZoneCss("f5g");
-
-            colMapping.put(9,atr4);
-
-            rowMapping.put(3, colMapping);*/
-
-
-
+            session.close();
             return  ow.writeValueAsString(rowMappings);
 
 

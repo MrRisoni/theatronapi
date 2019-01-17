@@ -85,8 +85,8 @@ public class BookController {
             resultObject.add(ow.writeValueAsString(rowMappings));
 
             Map<String, Object> resultObj = new HashMap<>();
-            resultObj.put("perforance", prfList.get(0));
-            resultObj.put("seats", takenseats.get(0));
+            resultObj.put("performance", prfList.get(0));
+            resultObj.put("taken", takenseats.get(0));
             resultObj.put("seatmap", rowMappings);
 
 

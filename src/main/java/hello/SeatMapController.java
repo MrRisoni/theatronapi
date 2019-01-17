@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,8 +28,34 @@ public class SeatMapController {
     {
         try {
 
+            Session session =  HibernateUtil.getSessionFactory().openSession();
 
-            Map<Integer, SeatAttributes> colMapping = new HashMap<>();
+            ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+            System.out.println("ob writer  ");
+
+            List<SeatMapModel> results =session.createCriteria(SeatMapModel.class).list();
+            session.close();
+
+
+            Map<Integer, Map<Integer, SeatAttributes>> rowMappings = new HashMap<>();
+            for (int rowId = 1; rowId < 25; rowId++) {
+                Map<Integer, SeatAttributes> colMappings = new HashMap<>();
+
+                for (SeatMapModel sMdl : results) {
+                    if (sMdl.getRowId() == rowId) {
+                        SeatAttributes str = new SeatAttributes();
+                        str.setSeatName(sMdl.getSeatName());
+                        str.setZoneCss(sMdl.getZoneInfo().getCss());
+
+                        colMappings.put(sMdl.getColId(), str);
+                    }
+                }
+
+                rowMappings.put(rowId, colMappings);
+            }
+
+
+           /* Map<Integer, SeatAttributes> colMapping = new HashMap<>();
             ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
 
             SeatAttributes atr1  = new SeatAttributes();
@@ -61,11 +88,11 @@ public class SeatMapController {
 
             colMapping.put(9,atr4);
 
-            rowMapping.put(3, colMapping);
+            rowMapping.put(3, colMapping);*/
 
 
 
-            return  ow.writeValueAsString(rowMapping);
+            return  ow.writeValueAsString(rowMappings);
 
 
         }

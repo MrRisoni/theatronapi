@@ -87,33 +87,6 @@ public class SeatMapController {
     }
 
 
-    @RequestMapping(value=  "/api/seatmap" , method = RequestMethod.GET)
-    public String getSeatMap()
-    {
-        try {
-
-            Session session =  HibernateUtil.getSessionFactory().openSession();
-
-            ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-            System.out.println("ob writer  ");
-
-            List<SeatMapModel> results =session.createCriteria(SeatMapModel.class).list();
-            session.close();
-            return  ow.writeValueAsString(results);
-
-
-        }
-        catch (Exception ex)
-        {
-            System.out.println("ERROR ");
-
-            System.out.println(ex.getMessage());
-            ex.printStackTrace();
-
-            return ex.getMessage();
-        }
-
-    }
 
     @RequestMapping(value=  "/api/seats" , method = RequestMethod.GET) ///perf_id/date
     public String getFreeSeats()

@@ -2,6 +2,7 @@ package hello;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import hello.seatPojos.SeatAttributes;
 import models.HibernateUtil;
 import models.SeatMapModel;
 import org.hibernate.Session;
@@ -10,13 +11,75 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @CrossOrigin
 @RestController
 public class SeatMapController {
 
+
+
+    @RequestMapping(value=  "/api/seatkeys" , method = RequestMethod.GET)
+    public String getSeatKeys()
+    {
+        try {
+
+
+            Map<Integer, SeatAttributes> colMapping = new HashMap<>();
+            ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+
+            SeatAttributes atr1  = new SeatAttributes();
+            atr1.setSeatName("GOO");
+            atr1.setZoneCss("4554ff");
+
+            colMapping.put(2,atr1);
+
+            SeatAttributes atr2  = new SeatAttributes();
+            atr1.setSeatName("FOO");
+            atr1.setZoneCss("ff09gh");
+
+            colMapping.put(3,atr2);
+
+
+            Map<Integer, Map<Integer, SeatAttributes>> rowMapping = new HashMap<>();
+            rowMapping.put(1, colMapping);
+
+
+            //
+            SeatAttributes atr3  = new SeatAttributes();
+            atr1.setSeatName("boo");
+            atr1.setZoneCss("45f");
+
+            colMapping.put(5,atr3);
+
+            SeatAttributes atr4  = new SeatAttributes();
+            atr1.setSeatName("loo");
+            atr1.setZoneCss("f5g");
+
+            colMapping.put(9,atr4);
+
+            rowMapping.put(3, colMapping);
+
+
+
+            return  ow.writeValueAsString(rowMapping);
+
+
+        }
+        catch (Exception ex)
+        {
+            System.out.println("ERROR ");
+
+            System.out.println(ex.getMessage());
+            ex.printStackTrace();
+
+            return ex.getMessage();
+        }
+
+    }
 
 
     @RequestMapping(value=  "/api/seatmap" , method = RequestMethod.GET)

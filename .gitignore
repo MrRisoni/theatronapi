@@ -20,3 +20,4 @@ README.html
 .mvn/wrapper
 spring_app.log
 *.php
+*.gz

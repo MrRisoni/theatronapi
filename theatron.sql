@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 14, 2019 at 01:38 PM
+-- Generation Time: Jan 15, 2019 at 06:03 PM
 -- Server version: 10.1.28-MariaDB
 -- PHP Version: 7.2.7
 
@@ -60,7 +60,8 @@ CREATE TABLE `authors` (
 
 INSERT INTO `authors` (`aut_id`, `aut_name`) VALUES
 (1, 'Henrik Ibsen'),
-(2, 'Anton Checkov');
+(2, 'Anton Checkov'),
+(3, 'Lev Tolstoy');
 
 -- --------------------------------------------------------
 
@@ -141,8 +142,7 @@ CREATE TABLE `order_item` (
   `itm_id` int(10) UNSIGNED NOT NULL,
   `itm_order_id` int(10) UNSIGNED NOT NULL,
   `itm_type_id` tinyint(3) UNSIGNED NOT NULL,
-  `itm_zone_id` smallint(5) UNSIGNED NOT NULL,
-  `itm_seatno` varchar(5) NOT NULL,
+  `itm_seatno` varchar(12) NOT NULL,
   `itm_ticket` varchar(10) NOT NULL,
   `itm_price` decimal(4,2) UNSIGNED NOT NULL,
   `itm_void` tinyint(4) NOT NULL DEFAULT '0'
@@ -152,10 +152,15 @@ CREATE TABLE `order_item` (
 -- Dumping data for table `order_item`
 --
 
-INSERT INTO `order_item` (`itm_id`, `itm_order_id`, `itm_type_id`, `itm_zone_id`, `itm_seatno`, `itm_ticket`, `itm_price`, `itm_void`) VALUES
-(1, 1, 1, 3, 'F45', '', '0.00', 0),
-(2, 1, 1, 3, 'F46', '', '0.00', 0),
-(3, 1, 1, 3, 'F47', '', '0.00', 1);
+INSERT INTO `order_item` (`itm_id`, `itm_order_id`, `itm_type_id`, `itm_seatno`, `itm_ticket`, `itm_price`, `itm_void`) VALUES
+(1, 1, 1, 'VIP_R23_C33', '', '0.00', 0),
+(2, 1, 1, 'VIP_R23_C34', '', '0.00', 0),
+(3, 1, 1, 'VIP_R23_C32', '', '0.00', 1),
+(4, 1, 1, 'BALCB_R2_C34', '', '0.00', 0),
+(5, 1, 1, 'BALCB_R3_C36', '', '0.00', 0),
+(6, 1, 1, 'BALCB_R3_C34', '', '0.00', 0),
+(7, 1, 1, 'BALCB_R3_C38', '', '0.00', 0),
+(8, 1, 1, 'BALCB_R2_C32', '', '0.00', 0);
 
 -- --------------------------------------------------------
 
@@ -238,7 +243,8 @@ CREATE TABLE `plays` (
 
 INSERT INTO `plays` (`ply_id`, `ply_title`, `ply_author_id`) VALUES
 (1, 'WIlduck', 1),
-(2, 'Uncle Vanya', 2);
+(2, 'Uncle Vanya', 2),
+(3, 'Master and Man', 3);
 
 -- --------------------------------------------------------
 
@@ -266,7 +272,8 @@ INSERT INTO `pricing` (`pri_id`, `pri_performance_id`, `pri_zone_id`, `pri_type_
 (5, 1, 5, 1, '45.00'),
 (6, 1, 6, 1, '45.00'),
 (7, 1, 7, 1, '45.00'),
-(8, 1, 8, 1, '45.00');
+(8, 1, 8, 1, '45.00'),
+(9, 1, 8, 4, '35.00');
 
 -- --------------------------------------------------------
 
@@ -514,7 +521,8 @@ CREATE TABLE `theaters` (
 
 INSERT INTO `theaters` (`tht_id`, `tht_name`, `tht_address`, `tht_active`) VALUES
 (1, 'Χώρα', '', 1),
-(2, 'Δημοτικό Πειραιά', '', 1);
+(2, 'Δημοτικό Πειραιά', '', 1),
+(3, 'Studio Steppe', '', 1);
 
 -- --------------------------------------------------------
 
@@ -562,7 +570,9 @@ INSERT INTO `zones` (`zon_id`, `zon_theater_id`, `zon_title`, `zon_csscolor`) VA
 (5, 2, 'Μπαλκόνι Α', 'facb0f'),
 (6, 2, 'Μπαλκόνι Β', 'fa7c0f'),
 (7, 2, 'Θεωρεια Επίπεδο Ι', '000'),
-(8, 2, 'Θεωρεια Επίπεδο ΙΙ', '0099ff');
+(8, 2, 'Θεωρεια Επίπεδο ΙΙ', '0099ff'),
+(9, 3, 'VIP', 'cc66ff'),
+(10, 3, 'Κανονικό', '3366ff');
 
 --
 -- Indexes for dumped tables
@@ -609,9 +619,8 @@ ALTER TABLE `orders`
 --
 ALTER TABLE `order_item`
   ADD PRIMARY KEY (`itm_id`),
-  ADD UNIQUE KEY `itm_order_id_2` (`itm_order_id`,`itm_type_id`,`itm_zone_id`,`itm_seatno`,`itm_void`),
+  ADD UNIQUE KEY `itm_order_id_2` (`itm_order_id`,`itm_type_id`,`itm_seatno`,`itm_void`) USING BTREE,
   ADD KEY `itm_type_id` (`itm_type_id`),
-  ADD KEY `itm_zone_id` (`itm_zone_id`),
   ADD KEY `itm_order_id` (`itm_order_id`);
 
 --
@@ -699,7 +708,7 @@ ALTER TABLE `actors`
 -- AUTO_INCREMENT for table `authors`
 --
 ALTER TABLE `authors`
-  MODIFY `aut_id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `aut_id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `characters`
@@ -723,7 +732,7 @@ ALTER TABLE `orders`
 -- AUTO_INCREMENT for table `order_item`
 --
 ALTER TABLE `order_item`
-  MODIFY `itm_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `itm_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `people`
@@ -747,13 +756,13 @@ ALTER TABLE `performance_dates`
 -- AUTO_INCREMENT for table `plays`
 --
 ALTER TABLE `plays`
-  MODIFY `ply_id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `ply_id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `pricing`
 --
 ALTER TABLE `pricing`
-  MODIFY `pri_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `pri_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `seatmap`
@@ -765,7 +774,7 @@ ALTER TABLE `seatmap`
 -- AUTO_INCREMENT for table `theaters`
 --
 ALTER TABLE `theaters`
-  MODIFY `tht_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `tht_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `types`
@@ -777,7 +786,7 @@ ALTER TABLE `types`
 -- AUTO_INCREMENT for table `zones`
 --
 ALTER TABLE `zones`
-  MODIFY `zon_id` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `zon_id` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Constraints for dumped tables
@@ -808,8 +817,7 @@ ALTER TABLE `orders`
 --
 ALTER TABLE `order_item`
   ADD CONSTRAINT `order_item_ibfk_1` FOREIGN KEY (`itm_order_id`) REFERENCES `orders` (`ord_id`),
-  ADD CONSTRAINT `order_item_ibfk_2` FOREIGN KEY (`itm_type_id`) REFERENCES `types` (`typ_id`),
-  ADD CONSTRAINT `order_item_ibfk_3` FOREIGN KEY (`itm_zone_id`) REFERENCES `zones` (`zon_id`);
+  ADD CONSTRAINT `order_item_ibfk_2` FOREIGN KEY (`itm_type_id`) REFERENCES `types` (`typ_id`);
 
 --
 -- Constraints for table `performance`

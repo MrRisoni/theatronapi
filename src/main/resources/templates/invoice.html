@@ -1,17 +1,129 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<head></head>
+<head>
+    <style>
+
+        html, body {
+            height: 100%;
+        }
+        .root {
+            min-height: 100%;
+            height: auto !important;
+            height: 100%;
+            margin: 0 auto -142px; /* the bottom margin is the negative value of the footer's height */
+        }
+
+
+        .footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+
+}
+
+
+
+  .card {
+  margin-top:2%;
+   border:1px solid black;
+-webkit-border-top-left-radius: 12px;
+-webkit-border-top-right-radius: 12px;
+-moz-border-radius-topleft: 12px;
+-moz-border-radius-topright: 12px;
+border-top-left-radius: 12px;
+border-top-right-radius: 12px;
+ padding:15px;
+   background-color:#ccd7ea
+  }
+
+.ticketsCard {
+ margin-top:2%;
+   border:1px solid black;
+-webkit-border-radius: 12px;
+-moz-border-radius: 12px;
+border-radius: 12px;
+ padding:15px;
+
+   /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ace5b2+0,b1b0e8+100 */
+background: #ace5b2; /* Old browsers */
+background: -moz-linear-gradient(45deg, #ace5b2 0%, #b1b0e8 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(45deg, #ace5b2 0%,#b1b0e8 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(45deg, #ace5b2 0%,#b1b0e8 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ace5b2', endColorstr='#b1b0e8',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+}
+
+.card-body {
+  border:1px solid black;
+
+   -webkit-border-bottom-right-radius: 12px;
+-webkit-border-bottom-left-radius: 12px;
+-moz-border-radius-bottomright: 12px;
+-moz-border-radius-bottomleft: 12px;
+border-bottom-right-radius: 12px;
+border-bottom-left-radius: 12px;
+ padding:15px;
+   background-color:#white
+}
+    </style>
+
+</head>
 <body>
-<span th:text="${message}"></span>
+<div id="root">
 
-<div style="font-size: 14px;">
-    <p style="margin-left: 13px;">Your account information</p>
-    <p style="margin-left: 13px;">
-        Account <span style="margin-left: 36px;" th:text="${to}">to</span>
-    </p>
+     <h1  style="color:blue; text-align:center;">Receipt Details</h1>
+
+
+    <span style="position: absolute; right: 0;"; th:text="${issueDateTime}">Issued on</span>
+
+    <div style="font-size: 14px;">
+        <p style="margin-left: 13px;">Your account information</p>
+        <p style="margin-left: 13px;">
+            Account <span style="margin-left: 36px;" th:text="${to}">to</span>
+        </p>
+    </div>
+
+
+    <div class="card">
+            Contact Details
+    </div>
+
+    <div class="card-body">
+
+
+            <p class="card-text">Full Name <span th:text="${fullName}"></span></p>
+            <p class="card-text">Mobile <span th:text="${mobile}"></span></p>
+            <p class="card-text">Email <span th:text="${email}"></span></p>
+
+
+
+    </div>
+
+
+    <div class="ticketsCard">
+        Ticket Details
+    </div>
+
+
+    <div class="card">
+        Payment Details
+    </div>
+
+
+
+
+    <div class="card-body">
+    </div>
+
+    <div class="footer">
+        <div class="row">
+            <div class="col-8 offset-2">
+                <img align="center" width="345" src="https://spring.io/img/spring-by-pivotal.png"/>
+            </div>
+        </div>
+    </div>
 </div>
-
-
 
 </body>
 </html>

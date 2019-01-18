@@ -117,6 +117,10 @@ public class BookController {
 
             Context context = new Context();
             context.setVariable("to", "myself");
+            context.setVariable("fullName", testObj.getContactData().getName() + " " + testObj.getContactData().getSurname());
+            context.setVariable("mobile", testObj.getContactData().getMobile());
+            context.setVariable("email", testObj.getContactData().getMail());
+
 
             System.out.println("renderedHtmlContent ");
 

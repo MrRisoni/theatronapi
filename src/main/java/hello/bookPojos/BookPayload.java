@@ -5,19 +5,18 @@ import java.util.ArrayList;
 // data posted for Vue.js
 public class BookPayload {
 
-    private Order details;
+    //  private Order details;
 
-    private ArrayList<Seat> seatList;
+    private Seat[] people;
 
-    private Card cardData;
+    // private Card cardData;
 
 
-    public BookPayload()
-    {
+    public BookPayload() {
 
     }
 
-
+/*
     public Card getCardData() {
         return cardData;
     }
@@ -33,12 +32,13 @@ public class BookPayload {
     public void setDetails(Order details) {
         this.details = details;
     }
+*/
 
-    public ArrayList<Seat> getSeatList() {
-        return seatList;
+    public Seat[] getPeople() {
+        return people;
     }
 
-    public void setSeatList(ArrayList<Seat> seatList) {
-        this.seatList = seatList;
+    public void setPeople(Seat[] people) {
+        this.people = people;
     }
 }

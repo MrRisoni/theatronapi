@@ -59,32 +59,7 @@ public class PerformancesController {
 
 
 
-    @RequestMapping(value= "/api/performance" ,method = RequestMethod.GET)
-    public String getPerformance()
-    {
-        Session session = null;
-        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
 
-        try {
-            session = HibernateUtil.getSessionFactory().openSession();
-
-            List<PerformanceModel> prfList = session.createCriteria(PerformanceModel.class).list();
-            for (PerformanceModel prf : prfList) {
-                System.out.println(prf);
-            }
-
-
-
-            return  ow.writeValueAsString(prfList.get(0));
-
-        }
-        catch(Exception ex)
-        {
-            ex.printStackTrace();
-
-            return ex.getMessage();
-        }
-    }
 
 
 }

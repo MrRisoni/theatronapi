@@ -2,8 +2,8 @@ package hello.bookPojos;
 
 public class Seat {
 
-    private String seatNo;
-    private String paxType;
+    private String type;
+    private String seat;
 
 
     public Seat()
@@ -11,19 +11,19 @@ public class Seat {
     }
 
 
-    public String getSeatNo() {
-        return seatNo;
+    public String getType() {
+        return type;
     }
 
-    public void setSeatNo(String seatNo) {
-        this.seatNo = seatNo;
+    public void setType(String type) {
+        this.type = type;
     }
 
-    public String getPaxType() {
-        return paxType;
+    public String getSeat() {
+        return seat;
     }
 
-    public void setPaxType(String paxType) {
-        this.paxType = paxType;
+    public void setSeat(String seat) {
+        this.seat = seat;
     }
 }

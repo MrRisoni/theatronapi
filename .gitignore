@@ -21,3 +21,5 @@ README.html
 spring_app.log
 *.php
 *.gz
+*.csv
+*.pdf

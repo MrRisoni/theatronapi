@@ -1,12 +1,22 @@
 package hello;
 
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
-
+import org.thymeleaf.TemplateEngine;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import hello.bookPojos.BookPayload;
+import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
+import static org.thymeleaf.templatemode.TemplateMode.HTML;
+import org.thymeleaf.context.Context;
+import org.w3c.tidy.Tidy;
+import org.xhtmlrenderer.pdf.ITextRenderer;
+
+import java.io.*;
+import java.nio.file.FileSystems;
+
+import static com.itextpdf.text.pdf.BaseFont.EMBEDDED;
+import static com.itextpdf.text.pdf.BaseFont.IDENTITY_H;
 
 @CrossOrigin
 @RestController
@@ -60,11 +70,70 @@ public class BookController {
 
         Gson g = new Gson();
         return g.toJson(bookCtrlResponse); */
+
+
+           // generate pdf
+            System.out.println("start pdf ");
+
+            ClassLoaderTemplateResolver templateResolver = new ClassLoaderTemplateResolver();
+            templateResolver.setPrefix("/");
+            templateResolver.setSuffix(".html");
+            templateResolver.setTemplateMode(HTML);
+            templateResolver.setCharacterEncoding("UTF-8");
+
+            TemplateEngine templateEngine = new TemplateEngine();
+            templateEngine.setTemplateResolver(templateResolver);
+
+            Context context = new Context();
+            context.setVariable("to", "myself");
+
+            System.out.println("renderedHtmlContent ");
+
+
+            String renderedHtmlContent = templateEngine.process("templates/invoice", context);
+            String xHtml = this.convertToXhtml(renderedHtmlContent);
+
+            ITextRenderer renderer = new ITextRenderer();
+
+            System.out.println("set baseurl ");
+
+
+            String baseUrl = FileSystems
+                    .getDefault()
+                    .getPath("src", "main", "resources")
+                    .toUri()
+                    .toURL()
+                    .toString();
+            renderer.setDocumentFromString(xHtml, baseUrl);
+            renderer.layout();
+
+            System.out.println("invoice ");
+
+
+            OutputStream outputStream = new FileOutputStream("receipt.pdf");
+            renderer.createPDF(outputStream);
+            outputStream.close();
+
+System.out.println("Finished");
+
             return "lol";
         }
         catch (Exception ex)
         {
             return "err on params + " + ex.getMessage();
         }
+    }
+
+
+
+    private String convertToXhtml(String html) throws UnsupportedEncodingException {
+        Tidy tidy = new Tidy();
+        tidy.setInputEncoding("UTF-8");
+        tidy.setOutputEncoding("UTF-8");
+        tidy.setXHTML(true);
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(html.getBytes("UTF-8"));
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        tidy.parseDOM(inputStream, outputStream);
+        return outputStream.toString("UTF-8");
     }
 }

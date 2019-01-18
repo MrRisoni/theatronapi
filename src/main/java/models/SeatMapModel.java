@@ -8,7 +8,7 @@ import javax.persistence.*;
 public class SeatMapModel {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "smp_id")
     private int id;
 

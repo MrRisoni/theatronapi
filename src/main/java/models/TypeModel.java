@@ -8,7 +8,7 @@ public class TypeModel {
 
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "typ_id")
     private int id;
 

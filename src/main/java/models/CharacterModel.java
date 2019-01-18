@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class CharacterModel {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "char_id")
     private int id;
 

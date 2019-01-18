@@ -8,14 +8,12 @@ public class OrderItemModel {
 
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "itm_id")
     private int id;
 
-
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn (name="itm_zone_id")
-    private ZoneModel zone;
+    @Column(name = "itm_order_id")
+    private int orderId;
 
 
     @OneToOne(fetch = FetchType.EAGER)
@@ -38,13 +36,14 @@ public class OrderItemModel {
     }
 
 
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
+    }
+
     public int getId() {
         return id;
     }
 
-    public ZoneModel getZone() {
-        return zone;
-    }
 
     public TypeModel getTyp() {
         return typ;
@@ -60,5 +59,26 @@ public class OrderItemModel {
 
     public Boolean getVoid() {
         return isVoid;
+    }
+
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+       public void setTyp(TypeModel typ) {
+        this.typ = typ;
+    }
+
+    public void setSeatNo(String seatNo) {
+        this.seatNo = seatNo;
+    }
+
+    public void setTktNo(String tktNo) {
+        this.tktNo = tktNo;
+    }
+
+    public void setVoid(Boolean aVoid) {
+        isVoid = aVoid;
     }
 }

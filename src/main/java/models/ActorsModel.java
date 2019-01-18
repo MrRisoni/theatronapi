@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class ActorsModel {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "act_id")
     private int id;
 

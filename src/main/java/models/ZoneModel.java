@@ -8,7 +8,7 @@ public class ZoneModel {
 
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "zon_id")
     private int id;
 

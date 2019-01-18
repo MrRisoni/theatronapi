@@ -2,6 +2,8 @@ package hello;
 
 
 import com.google.gson.Gson;
+import models.*;
+import org.hibernate.Session;
 import org.thymeleaf.TemplateEngine;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -53,6 +55,35 @@ public class BookController {
 
             System.out.println(testObj.getPerformanceData());
 
+            Session session =  HibernateUtil.getSessionFactory().openSession();
+
+            OrderModel ord = new OrderModel();
+            ord.setEmail(testObj.getContactData().getMail());
+            ord.setSurname(testObj.getContactData().getSurname());
+
+            PerformanceModel perfMdl = new PerformanceModel();
+            perfMdl.setId(Integer.parseInt(testObj.getPerformanceData().getId()));
+
+            ord.setPerform(perfMdl);
+
+            session.persist(ord);
+            System.out.println(ord.getId());
+
+
+            OrderItemModel ordItm = new OrderItemModel();
+            ordItm.setSeatNo(testObj.getPeople()[0].getSeat());
+            ordItm.setOrderId(ord.getId());
+            session.persist(ordItm);
+
+
+            CardDetailsModel card = new CardDetailsModel();
+            card.setCardType(testObj.getCardData().getType());
+            card.setOrderItem(ord);
+            session.persist(card);
+
+
+
+            session.close();
 
 
            /* HttpRequests req = new HttpRequests("http://localhost:3000/api/banks/ok");

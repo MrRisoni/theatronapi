@@ -9,9 +9,14 @@ public class CardDetailsModel {
 
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ord_id")
     private int id;
+
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn (name=" crd_order_id")
+    private OrderModel orderItem;
 
 
     @Column(name = "crd_card_type")
@@ -73,5 +78,14 @@ public class CardDetailsModel {
 
     public void setCardLast(String cardLast) {
         this.cardLast = cardLast;
+    }
+
+
+    public OrderModel getOrderItem() {
+        return orderItem;
+    }
+
+    public void setOrderItem(OrderModel orderItem) {
+        this.orderItem = orderItem;
     }
 }

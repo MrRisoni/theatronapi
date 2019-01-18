@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class PlayModel {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ply_id")
     private int id;
 

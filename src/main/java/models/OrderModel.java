@@ -10,7 +10,7 @@ public class OrderModel {
 
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ord_id")
     private int id;
 
@@ -25,8 +25,17 @@ public class OrderModel {
     private Date plays_one;
 
 
-    @Column(name = "ord_surname")
+    @Column(name = "ord_name")
     private String name;
+
+    @Column(name = "ord_surname")
+    private String surname;
+
+    @Column(name = "ord_mobile")
+    private String mobile;
+
+    @Column(name = "ord_email")
+    private String email ;
 
 
     @Column(name = "ord_void")
@@ -68,5 +77,54 @@ public class OrderModel {
 
     public List<OrderItemModel> getItemsList() {
         return itemsList;
+    }
+
+    public void setPerform(PerformanceModel perform) {
+        this.perform = perform;
+    }
+
+    public void setPlays_one(Date plays_one) {
+        this.plays_one = plays_one;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setVoid(Boolean aVoid) {
+        isVoid = aVoid;
+    }
+
+    public void setItemsList(List<OrderItemModel> itemsList) {
+        this.itemsList = itemsList;
+    }
+
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

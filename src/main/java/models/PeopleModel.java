@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class PeopleModel {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ppl_id")
     private int id;
 

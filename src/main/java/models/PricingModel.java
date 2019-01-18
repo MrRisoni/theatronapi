@@ -8,7 +8,7 @@ public class PricingModel {
 
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "pri_id")
     private int id;
 

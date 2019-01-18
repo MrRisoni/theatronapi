@@ -9,7 +9,7 @@ public class PerformanceDateModel {
 
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "prd_id")
     private int id;
 

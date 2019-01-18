@@ -10,7 +10,7 @@ import java.util.List;
 public class PerformanceModel {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "per_id")
     private int id;
 

@@ -13,7 +13,7 @@ const postObj = {
                     seat: 'ABD',
                 },
             ],
-    credit: {
+    cardData: {
         number: '411111111111111',
         cvv: '123',
         type: 'VIDE',
@@ -21,11 +21,11 @@ const postObj = {
         expMonth: '12',
         expYear: '22',
     },
-    performance: {
+    performanceData: {
         id: 1,
         date: '2019-01-25'
     },
-    contact: {
+    contactData: {
         mail: 'test@test.gr',
         surname: 'CHEKOV',
         name: 'ANTON',

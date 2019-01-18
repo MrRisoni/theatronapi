@@ -1,19 +1,12 @@
 package hello;
 
-import java.awt.print.Book;
-import java.util.ArrayList;
-
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
-import general.HttpRequests;
 
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import pay.Payment;
 import hello.bookPojos.BookPayload;
-import hello.bookPojos.Order;
-import hello.bookPojos.Seat;
 
 @CrossOrigin
 @RestController
@@ -36,7 +29,6 @@ public class BookController {
 
             System.out.println("print post params");
             System.out.println(postData);
-            ObjectMapper objectMapper = new ObjectMapper();
 
             System.out.println("map to class");
 
@@ -44,20 +36,17 @@ public class BookController {
             System.out.println(testObj.getPeople().length);
             System.out.println(testObj.getPeople()[0].getSeat());
 
+            System.out.println(testObj.getCardData().getCardHolder());
+            System.out.println(testObj.getCardData());
+
+            System.out.println(testObj.getContactData());
+
+            System.out.println(testObj.getPerformanceData());
+
+
+
            /* HttpRequests req = new HttpRequests("http://localhost:3000/api/banks/ok");
             Payment pay = new Payment(req);
-
-            Order ord = new Order();
-            ord.setEmail("foo@foo");
-
-            Seat st = new Seat();
-            st.setPaxType("ADT");
-            st.setSeatNo("AB1");
-
-            BookPayload pl = new BookPayload();
-            pl.setDetails(ord);
-            ArrayList<Seat> seatList = new ArrayList<Seat>();
-            seatList.add(st);*/
 
 
        /* pay.setPayload(pl);

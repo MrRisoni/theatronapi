@@ -5,18 +5,35 @@ import java.util.ArrayList;
 // data posted for Vue.js
 public class BookPayload {
 
-    //  private Order details;
 
     private Seat[] people;
 
-    // private Card cardData;
+    private Card cardData;
 
+    private Contact contactData;
+
+    private Performance performanceData;
 
     public BookPayload() {
 
     }
 
-/*
+    public Performance getPerformanceData() {
+        return performanceData;
+    }
+
+    public void setPerformanceData(Performance performanceData) {
+        this.performanceData = performanceData;
+    }
+
+    public Contact getContactData() {
+        return contactData;
+    }
+
+    public void setContactData(Contact contactData) {
+        this.contactData = contactData;
+    }
+
     public Card getCardData() {
         return cardData;
     }
@@ -25,14 +42,7 @@ public class BookPayload {
         this.cardData = cardData;
     }
 
-    public Order getDetails() {
-        return details;
-    }
 
-    public void setDetails(Order details) {
-        this.details = details;
-    }
-*/
 
     public Seat[] getPeople() {
         return people;

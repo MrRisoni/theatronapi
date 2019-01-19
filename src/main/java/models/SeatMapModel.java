@@ -41,7 +41,8 @@ public class SeatMapModel {
     private int realColId;
 
 
-
+    @Column(name = "smp_theater_id")
+    private int theaterId;
 
 
     public SeatMapModel(){}
@@ -105,4 +106,6 @@ public class SeatMapModel {
     public void setRealColId(int realColId) {
         this.realColId = realColId;
     }
+
+
 }

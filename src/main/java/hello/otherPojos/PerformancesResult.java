@@ -18,11 +18,20 @@ public class PerformancesResult {
     private Double minPrice; // adults;
     private Double maxPrice;
     private int totalSeats;
-
+    private String authorName;
 
     public PerformancesResult() {
 
 
+    }
+
+
+    public String getAuthorName() {
+        return authorName;
+    }
+
+    public void setAuthorName(String authorName) {
+        this.authorName = authorName;
     }
 
     public String getGenre() {

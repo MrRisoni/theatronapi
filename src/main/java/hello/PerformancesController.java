@@ -38,7 +38,7 @@ public class PerformancesController {
                    "    p.per_duration AS duration, t.tht_name AS theaterName,\n" +
                    "    p.per_from_date AS fromDate, p.per_to_date AS toDate,\n" +
                    "    ply.ply_title AS playName , G.gen_title AS genreTitle,\n" +
-                   "    prices.minPrice, prices.maxPrice, p.per_season_id AS seasonId\n" +
+                   "    prices.minPrice, prices.maxPrice, p.per_season_id AS seasonId,a.aut_name \n" +
                    "    FROM  performance_dates\n" +
                    "    JOIN performance p ON (p.per_id = prd_performance_id AND p.per_season_id = prd_season_id)\n" +
                    "    JOIN people pl   ON  pl.ppl_id = per_director_id\n" +
@@ -101,6 +101,8 @@ public class PerformancesController {
                 prf.setMinPrice( minPrice.doubleValue());
                 prf.setMaxPrice(maxPrice.doubleValue());
                 prf.setSeasonId( seasonId.intValue() );
+                prf.setAuthorName( (String) obj[13]);
+
                 resultList.add(prf);
             }
 

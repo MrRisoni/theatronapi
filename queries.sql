@@ -15,27 +15,28 @@ GROUP BY p.per_id
 
 
 
-SELECT smp_theater_id, COUNT(smp_id) AS totalSeats
-FROM  seatmap
-GROUP BY smp_theater_id
+
+
+          JOIN ( SELECT smp_theater_id, COUNT(smp_id) AS totalSeats
+                 FROM  seatmap
+                 GROUP BY smp_theater_id ) AS theaterSeats ON  theaterSeats.smp_theater_id = p.per_theater_id
 
 
 
-
-
-
-
- SELECT prd_id, prd_date, IF ( orderItems.tickets IS NULL,0,orderItems.tickets) AS totalTickets
+// average tickets per day
+ SELECT 	p.per_id ,
+ AVG(IF ( orderItems.tickets IS NULL,0,orderItems.tickets)) AS totalTickets
           FROM  performance_dates
           JOIN performance p ON (p.per_id = prd_performance_id AND p.per_season_id = prd_season_id)
+
+
+
           LEFT JOIN (
-          SELECT  ord_performance_id ,ord_perf_date_id, COUNT(itm_id) AS tickets  FROM order_item
-          JOIN orders ON itm_order_id = ord_id
-          JOIN performance p ON (p.per_id = ord_performance_id AND p.per_season_id = ord_season_id)
-
-          WHERE itm_void =0
-          AND ord_void =0
-          GROUP BY  ord_perf_date_id ) AS orderItems ON orderItems.ord_perf_date_id = prd_id
-          ORDER BY prd_date ASC
-
+                  SELECT  ord_perf_date_id, COUNT(itm_id) AS tickets  FROM order_item
+                  JOIN orders ON itm_order_id = ord_id
+                  JOIN performance p ON (p.per_id = ord_performance_id AND p.per_season_id = ord_season_id)
+                  WHERE itm_void =0
+                  AND ord_void =0
+                  GROUP BY  ord_perf_date_id ) AS orderItems ON orderItems.ord_perf_date_id = prd_id
+GROUP BY prd_performance_id
 

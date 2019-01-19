@@ -2,27 +2,14 @@ package hello;
 
 
 import com.google.gson.Gson;
+import docs.BarCodeGenerator;
 import models.*;
 import org.hibernate.Session;
-import org.thymeleaf.TemplateEngine;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import hello.bookPojos.BookPayload;
-import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
-import static org.thymeleaf.templatemode.TemplateMode.HTML;
-import org.thymeleaf.context.Context;
-import org.w3c.tidy.Tidy;
-import org.xhtmlrenderer.pdf.ITextRenderer;
+import docs.PDFGenerator;
 
-import java.io.*;
-import java.nio.file.FileSystems;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-
-import static com.itextpdf.text.pdf.BaseFont.EMBEDDED;
-import static com.itextpdf.text.pdf.BaseFont.IDENTITY_H;
 
 @CrossOrigin
 @RestController
@@ -107,55 +94,22 @@ public class BookController {
         return g.toJson(bookCtrlResponse); */
 
 
-           // generate pdf
-            System.out.println("start pdf ");
+           // generate docs
+            System.out.println("start docs ");
 
-            ClassLoaderTemplateResolver templateResolver = new ClassLoaderTemplateResolver();
-            templateResolver.setPrefix("/");
-            templateResolver.setSuffix(".html");
-            templateResolver.setTemplateMode(HTML);
-            templateResolver.setCharacterEncoding("UTF-8");
-
-            TemplateEngine templateEngine = new TemplateEngine();
-            templateEngine.setTemplateResolver(templateResolver);
-
-            Context context = new Context();
-            context.setVariable("to", "myself");
-            context.setVariable("fullName", testObj.getContactData().getName() + " " + testObj.getContactData().getSurname());
-            context.setVariable("mobile", testObj.getContactData().getMobile());
-            context.setVariable("email", testObj.getContactData().getMail());
-
-            Calendar cal = Calendar.getInstance();
-            Date date=cal.getTime();
-            DateFormat dateFormat = new SimpleDateFormat("d M Y HH:mm:ss");
-            context.setVariable("issueDateTime", dateFormat.toString());
-
-            System.out.println("renderedHtmlContent ");
-
-
-            String renderedHtmlContent = templateEngine.process("templates/invoice", context);
-            String xHtml = this.convertToXhtml(renderedHtmlContent);
-
-            ITextRenderer renderer = new ITextRenderer();
-
-            System.out.println("set baseurl ");
-
-
-            String baseUrl = FileSystems
-                    .getDefault()
-                    .getPath("src", "main", "resources")
-                    .toUri()
-                    .toURL()
-                    .toString();
-            renderer.setDocumentFromString(xHtml, baseUrl);
-            renderer.layout();
+            PDFGenerator pdfgen = new PDFGenerator(testObj);
+            pdfgen.makeAllTicketsPdf();
 
             System.out.println("invoice ");
 
+            System.out.println("barcode ");
+            BarCodeGenerator barGenny = new BarCodeGenerator();
+            barGenny.makeBarCode();
 
-            OutputStream outputStream = new FileOutputStream("receipt.pdf");
-            renderer.createPDF(outputStream);
-            outputStream.close();
+
+
+
+
 
 System.out.println("Finished");
 
@@ -169,14 +123,5 @@ System.out.println("Finished");
 
 
 
-    private String convertToXhtml(String html) throws UnsupportedEncodingException {
-        Tidy tidy = new Tidy();
-        tidy.setInputEncoding("UTF-8");
-        tidy.setOutputEncoding("UTF-8");
-        tidy.setXHTML(true);
-        ByteArrayInputStream inputStream = new ByteArrayInputStream(html.getBytes("UTF-8"));
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        tidy.parseDOM(inputStream, outputStream);
-        return outputStream.toString("UTF-8");
-    }
+
 }

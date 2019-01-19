@@ -27,7 +27,7 @@ public class BookControllerTests {
     @Test
     public void onPostEmptyData() throws Exception {
 
-        this.mockMvc.perform(post("/api/book")
+        this.mockMvc.perform(post("/api/docs")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{foo:1}"));
 

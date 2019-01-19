@@ -1,4 +1,4 @@
-package pdf;
+package docs;
 
 import hello.bookPojos.BookPayload;
 import org.thymeleaf.TemplateEngine;
@@ -87,7 +87,7 @@ public class PDFGenerator {
     private void savePDF(ITextRenderer render, String pdfName)
     {
         try {
-            OutputStream outputStream = new FileOutputStream(pdfName + ".pdf");
+            OutputStream outputStream = new FileOutputStream(pdfName + ".docs");
             render.createPDF(outputStream);
             outputStream.close();
         }

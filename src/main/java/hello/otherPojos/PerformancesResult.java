@@ -13,10 +13,12 @@ public class PerformancesResult {
     private int seasonId;
     private Date fromDate;
     private Date toDate;
-    private float avgEmptySeats; // average empty seats per day
+    private double avgCapacity;
     private String genre;
-    private float minPrice; // adults;
-    private float maxPrice;
+    private Double minPrice; // adults;
+    private Double maxPrice;
+    private int totalSeats;
+
 
     public PerformancesResult() {
 
@@ -96,28 +98,40 @@ public class PerformancesResult {
     }
 
 
-    public float getAvgEmptySeats() {
-        return avgEmptySeats;
+    public double getAvgCapacity() {
+        return avgCapacity;
     }
 
-    public void setAvgEmptySeats(float avgEmptySeats) {
-        this.avgEmptySeats = avgEmptySeats;
+    public void setAvgCapacity(double avgCapacity) {
+        this.avgCapacity = avgCapacity;
     }
 
 
-    public float getMinPrice() {
+    public Double getMinPrice() {
         return minPrice;
     }
 
-    public void setMinPrice(float minPrice) {
+    public void setMinPrice(Double minPrice) {
         this.minPrice = minPrice;
     }
 
-    public float getMaxPrice() {
+    public Double getMaxPrice() {
         return maxPrice;
     }
 
-    public void setMaxPrice(float maxPrice) {
+    public void setMaxPrice(Double maxPrice) {
         this.maxPrice = maxPrice;
     }
+
+
+    public int getTotalSeats() {
+        return totalSeats;
+    }
+
+    public void setTotalSeats(int totalSeats) {
+        this.totalSeats = totalSeats;
+    }
+
+
+
 }

@@ -1,6 +1,7 @@
 package hello.otherPojos;
 
 import java.math.BigInteger;
+import java.util.Date;
 
 public class PerformancesResult {
 
@@ -10,10 +11,12 @@ public class PerformancesResult {
     private String theaterName;
     private String playName;
     private int seasonId;
-    private String fromDate;
-    private String toDate;
+    private Date fromDate;
+    private Date toDate;
     private float avgEmptySeats; // average empty seats per day
     private String genre;
+    private float minPrice; // adults;
+    private float maxPrice;
 
     public PerformancesResult() {
 
@@ -36,19 +39,19 @@ public class PerformancesResult {
         this.seasonId = seasonId;
     }
 
-    public String getFromDate() {
+    public Date getFromDate() {
         return fromDate;
     }
 
-    public void setFromDate(String fromDate) {
+    public void setFromDate(Date fromDate) {
         this.fromDate = fromDate;
     }
 
-    public String getToDate() {
+    public Date getToDate() {
         return toDate;
     }
 
-    public void setToDate(String toDate) {
+    public void setToDate(Date toDate) {
         this.toDate = toDate;
     }
 
@@ -99,5 +102,22 @@ public class PerformancesResult {
 
     public void setAvgEmptySeats(float avgEmptySeats) {
         this.avgEmptySeats = avgEmptySeats;
+    }
+
+
+    public float getMinPrice() {
+        return minPrice;
+    }
+
+    public void setMinPrice(float minPrice) {
+        this.minPrice = minPrice;
+    }
+
+    public float getMaxPrice() {
+        return maxPrice;
+    }
+
+    public void setMaxPrice(float maxPrice) {
+        this.maxPrice = maxPrice;
     }
 }

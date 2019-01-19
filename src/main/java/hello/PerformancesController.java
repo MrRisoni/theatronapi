@@ -3,6 +3,7 @@ package hello;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -30,13 +31,15 @@ public class PerformancesController {
             session = HibernateUtil.getSessionFactory().openSession();
 
             // fetch total empty seats
-            String q =  " SELECT t.tht_id AS theaterId, p.per_id AS performanceId, p.per_duration AS duration, t.tht_name AS theaterName, " +
-                    "  ply.ply_title AS playName, p.per_season_id AS seasonId, p.per_from_date AS fromDate, p.per_to_date AS toDate " +
+            String q =  " SELECT t.tht_id AS theaterId, p.per_id AS performanceId, p.per_duration AS duration, " +
+                    "t.tht_name AS theaterName,  ply.ply_title AS playName, p.per_season_id AS seasonId, " +
+                    " p.per_from_date AS fromDate, p.per_to_date AS toDate " +
                     " FROM  performance p " +
                     " JOIN people pl   ON  pl.ppl_id = per_director_id " +
                     " JOIN theaters t ON T.tht_id = p.per_theater_id " +
                     " JOIN plays ply ON ply.ply_id =  per_play_id " +
-                    " JOIN authors a ON a.aut_id = ply.ply_author_id " +
+                    " JOIN genres G ON G.gen_id = ply.ply_genre_id " +
+            " JOIN authors a ON a.aut_id = ply.ply_author_id " +
                     " WHERE  CURRENT_DATE >= p.per_from_date  " +
                     " AND  p.per_to_date >= CURRENT_DATE ";
 
@@ -52,8 +55,10 @@ public class PerformancesController {
                 prf.setDuration( (Short) obj[2]);
                 prf.setTheaterName((String) obj[3]);
                 prf.setPlayName((String) obj[4]);
-                prf.setSeasonId( (Integer) obj[5]);
-                prf.setFromDate( (String) obj[6]);
+                prf.setFromDate( (Date) obj[6]);
+                prf.setToDate( (Date) obj[7]);
+                prf.setSeasonId( (Byte) obj[5]);
+
                 resultList.add(prf);
             }
 

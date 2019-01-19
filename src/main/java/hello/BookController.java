@@ -16,6 +16,10 @@ import org.xhtmlrenderer.pdf.ITextRenderer;
 
 import java.io.*;
 import java.nio.file.FileSystems;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 import static com.itextpdf.text.pdf.BaseFont.EMBEDDED;
 import static com.itextpdf.text.pdf.BaseFont.IDENTITY_H;
@@ -121,6 +125,10 @@ public class BookController {
             context.setVariable("mobile", testObj.getContactData().getMobile());
             context.setVariable("email", testObj.getContactData().getMail());
 
+            Calendar cal = Calendar.getInstance();
+            Date date=cal.getTime();
+            DateFormat dateFormat = new SimpleDateFormat("d M Y HH:mm:ss");
+            context.setVariable("issueDateTime", dateFormat.toString());
 
             System.out.println("renderedHtmlContent ");
 

@@ -66,6 +66,28 @@ border-bottom-left-radius: 12px;
  padding:15px;
    background-color:#white
 }
+
+/* https://border-radius.com */
+.ticketInfo {
+  border:1px solid black;
+   margin-top : 2%;
+   -webkit-border-radius: 8px;
+-moz-border-radius: 8px;
+border-radius: 8px;
+    padding-bottom: 15px;
+
+background: #eae5e9; /* Old browsers */
+background: -moz-linear-gradient(45deg, #eae5e9 0%, #bec9d1 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(45deg, #eae5e9 0%,#bec9d1 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(45deg, #eae5e9 0%,#bec9d1 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eae5e9', endColorstr='#bec9d1',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+
+
+}
+
+.TicketRow {
+    margin-left:5%
+}
     </style>
 
 </head>
@@ -77,12 +99,6 @@ border-bottom-left-radius: 12px;
 
     <span style="position: absolute; right: 0;"; th:text="${issueDateTime}">Issued on</span>
 
-    <div style="font-size: 14px;">
-        <p style="margin-left: 13px;">Your account information</p>
-        <p style="margin-left: 13px;">
-            Account <span style="margin-left: 36px;" th:text="${to}">to</span>
-        </p>
-    </div>
 
 
     <div class="card">
@@ -106,6 +122,22 @@ border-bottom-left-radius: 12px;
     </div>
 
 
+    <div class="ticketInfo">
+            <div class="TicketRow">
+                <div class="pplType">
+                     <h3>Type:</h3> ADT 22.00
+                </div>
+
+                <div class="seatId">
+                    <h3>ID</h3> BLABLABLA
+                    Zone: Boxes, Row 1 Col 2
+                </div>
+            </div>
+
+    </div>
+
+
+
     <div class="card">
         Payment Details
     </div>
@@ -117,11 +149,9 @@ border-bottom-left-radius: 12px;
     </div>
 
     <div class="footer">
-        <div class="row">
-            <div class="col-8 offset-2">
+
                 <img align="center" width="345" src="https://spring.io/img/spring-by-pivotal.png"/>
-            </div>
-        </div>
+
     </div>
 </div>
 

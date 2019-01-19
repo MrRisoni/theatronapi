@@ -33,6 +33,15 @@ public class SeatMapModel {
     private ZoneModel zoneInfo;
 
 
+    @Column(name = "smp_real_rowid")
+    private int realRowId;
+
+
+    @Column(name = "smp_real_colid")
+    private int realColId;
+
+
+
 
 
     public SeatMapModel(){}
@@ -66,5 +75,34 @@ public class SeatMapModel {
 
     public ZoneModel getZoneInfo() {
         return zoneInfo;
+    }
+
+
+    public void setRowId(int rowId) {
+        this.rowId = rowId;
+    }
+
+    public void setColId(int colId) {
+        this.colId = colId;
+    }
+
+    public void setZoneInfo(ZoneModel zoneInfo) {
+        this.zoneInfo = zoneInfo;
+    }
+
+    public int getRealRowId() {
+        return realRowId;
+    }
+
+    public void setRealRowId(int realRowId) {
+        this.realRowId = realRowId;
+    }
+
+    public int getRealColId() {
+        return realColId;
+    }
+
+    public void setRealColId(int realColId) {
+        this.realColId = realColId;
     }
 }

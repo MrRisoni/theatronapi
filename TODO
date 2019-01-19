@@ -1,10 +1,9 @@
 booking
 tests with mocks?
-mail thymeleaf
-seat map
 sockets on seat click
-pdf receipt
 
-more theaters setup
+2 more theaters setup
 
-https://memorynotfound.com/spring-mail-sending-email-thymeleaf-html-template-example/
+one pdf per ticket
+one pdf with all tickets
+

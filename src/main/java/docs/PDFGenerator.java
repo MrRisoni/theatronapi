@@ -51,9 +51,14 @@ public class PDFGenerator {
             context.setVariable("mobile", this.bookData.getContactData().getMobile());
             context.setVariable("email", this.bookData.getContactData().getMail());
 
+            context.setVariable("tktArray", this.bookData.getPeople());
+
+
+
+
             Calendar cal = Calendar.getInstance();
             Date date = cal.getTime();
-            DateFormat dateFormat = new SimpleDateFormat("d M Y HH:mm:ss");
+            DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
             context.setVariable("issueDateTime", dateFormat.toString());
 
             System.out.println("renderedHtmlContent ");
@@ -87,7 +92,7 @@ public class PDFGenerator {
     private void savePDF(ITextRenderer render, String pdfName)
     {
         try {
-            OutputStream outputStream = new FileOutputStream(pdfName + ".docs");
+            OutputStream outputStream = new FileOutputStream(pdfName + ".pdf");
             render.createPDF(outputStream);
             outputStream.close();
         }

@@ -25,7 +25,7 @@ public class BarCodeGenerator {
             barcode.setFontName("Monospaced");
             barcode.setFontSize(16);
             barcode.setModuleWidth(2);
-            barcode.setBarHeight(100);
+            barcode.setBarHeight(120);
             barcode.setHumanReadableLocation(HumanReadableLocation.BOTTOM);
             barcode.setContent("123456789");
 

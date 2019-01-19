@@ -1,20 +1,15 @@
 package hello;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
+
+import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
-import models.PerformanceModel;
+import hello.otherPojos.PerformancesResult;
 import models.HibernateUtil;
-import models.SeatMapModel;
 import org.hibernate.Session;
-import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -34,8 +29,9 @@ public class PerformancesController {
         try {
             session = HibernateUtil.getSessionFactory().openSession();
 
-            String q =  " SELECT p.per_duration, pl.ppl_fullname, t.tht_name, " +
-                    "  ply.ply_title, a.aut_name " +
+            // fetch total empty seats
+            String q =  " SELECT t.tht_id AS theaterId, p.per_id AS performanceId, p.per_duration AS duration, t.tht_name AS theaterName, " +
+                    "  ply.ply_title AS playName, p.per_season_id AS seasonId, p.per_from_date AS fromDate, p.per_to_date AS toDate " +
                     " FROM  performance p " +
                     " JOIN people pl   ON  pl.ppl_id = per_director_id " +
                     " JOIN theaters t ON T.tht_id = p.per_theater_id " +
@@ -43,15 +39,29 @@ public class PerformancesController {
                     " JOIN authors a ON a.aut_id = ply.ply_author_id " +
                     " WHERE  CURRENT_DATE >= p.per_from_date  " +
                     " AND  p.per_to_date >= CURRENT_DATE ";
-            List<Object[]> persons = session.createNativeQuery(q)
+
+            List<Object[]> data = session.createNativeQuery(q)
                     .getResultList();
-            return  ow.writeValueAsString(persons);
+
+            ArrayList<PerformancesResult> resultList = new ArrayList<PerformancesResult>();
+
+            for (Object[] obj : data) {
+                PerformancesResult prf = new PerformancesResult();
+                prf.setTheaterId((Integer) obj[0] );
+                prf.setPerformanceId( (BigInteger) obj[1]);
+                prf.setDuration( (Short) obj[2]);
+                prf.setTheaterName((String) obj[3]);
+                prf.setPlayName((String) obj[4]);
+                prf.setSeasonId( (Integer) obj[5]);
+                prf.setFromDate( (String) obj[6]);
+                resultList.add(prf);
+            }
+
+            return  ow.writeValueAsString(resultList);
 
         }
         catch(Exception ex)
         {
-            ex.printStackTrace();
-
             return ex.getMessage();
         }
     }

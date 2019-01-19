@@ -3,98 +3,100 @@
 <head>
     <style>
 
-        html, body {
-            height: 100%;
-        }
-        .root {
-            min-height: 100%;
-            height: auto !important;
-            height: 100%;
-            margin: 0 auto -142px; /* the bottom margin is the negative value of the footer's height */
-        }
-
-
-        .footer {
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  text-align: center;
-
+        html,
+body {
+	height: 100%;
 }
 
+.root {
+	min-height: 100%;
+	height: auto !important;
+	height: 100%;
+	margin: 0 auto -142px;
+	/* the bottom margin is the negative value of the footer's height */
+}
+
+.footer {
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	text-align: center;
+}
 
 .grayish {
-background: #eae5e9; /* Old browsers */
-background: -moz-linear-gradient(45deg, #eae5e9 0%, #bec9d1 100%); /* FF3.6-15 */
-background: -webkit-linear-gradient(45deg, #eae5e9 0%,#bec9d1 100%); /* Chrome10-25,Safari5.1-6 */
-background: linear-gradient(45deg, #eae5e9 0%,#bec9d1 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eae5e9', endColorstr='#bec9d1',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+	background: #eae5e9;
+	/* Old browsers */
+	background: -moz-linear-gradient(45deg, #eae5e9 0%, #bec9d1 100%);
+	/* FF3.6-15 */
+	background: -webkit-linear-gradient(45deg, #eae5e9 0%, #bec9d1 100%);
+	/* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(45deg, #eae5e9 0%, #bec9d1 100%);
+	/* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eae5e9', endColorstr='#bec9d1', GradientType=1);
+	/* IE6-9 fallback on horizontal gradient */
 }
 
-
-  .card {
-  margin-top:2%;
-   border:1px solid black;
--webkit-border-top-left-radius: 12px;
--webkit-border-top-right-radius: 12px;
--moz-border-radius-topleft: 12px;
--moz-border-radius-topright: 12px;
-border-top-left-radius: 12px;
-border-top-right-radius: 12px;
- padding:15px;
-  }
+.card {
+	margin-top: 2%;
+	border: 1px solid black;
+	-webkit-border-top-left-radius: 12px;
+	-webkit-border-top-right-radius: 12px;
+	-moz-border-radius-topleft: 12px;
+	-moz-border-radius-topright: 12px;
+	border-top-left-radius: 12px;
+	border-top-right-radius: 12px;
+	padding: 15px;
+}
 
 .ticketsCard {
- margin-top:2%;
-   border:1px solid black;
--webkit-border-radius: 12px;
--moz-border-radius: 12px;
-border-radius: 12px;
- padding:15px;
-
+	margin-top: 2%;
+	border: 1px solid black;
+	-webkit-border-radius: 12px;
+	-moz-border-radius: 12px;
+	border-radius: 12px;
+	padding: 15px;
 }
 
 .card-body {
-  border:1px solid black;
-
-   -webkit-border-bottom-right-radius: 12px;
--webkit-border-bottom-left-radius: 12px;
--moz-border-radius-bottomright: 12px;
--moz-border-radius-bottomleft: 12px;
-border-bottom-right-radius: 12px;
-border-bottom-left-radius: 12px;
- padding:15px;
+	border: 1px solid black;
+	-webkit-border-bottom-right-radius: 12px;
+	-webkit-border-bottom-left-radius: 12px;
+	-moz-border-radius-bottomright: 12px;
+	-moz-border-radius-bottomleft: 12px;
+	border-bottom-right-radius: 12px;
+	border-bottom-left-radius: 12px;
+	padding: 15px;
 }
 
+
 /* https://border-radius.com */
+
 .ticketInfo {
-  border:1px solid black;
-   margin-top : 2%;
-   -webkit-border-radius: 8px;
--moz-border-radius: 8px;
-border-radius: 8px;
-    padding-bottom: 15px;
-
-
-
+	border: 1px solid black;
+	margin-top: 2%;
+	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+	border-radius: 8px;
+	padding-bottom: 15px;
 }
 
 .TicketRow {
-    margin-left:5%
+	margin-left: 5%
 }
-
 
 .col {
-  float: left;
-  width: 50%;
+	float: left;
+	width: 50%;
 }
 
+
 /* Clear floats after the columns */
+
 .ticketInfo:after {
-  content: "";
-  display: table;
-  clear: both;
+	content: "";
+	display: table;
+	clear: both;
 }
 
 
@@ -132,31 +134,36 @@ border-radius: 8px;
     </div>
 
 
-    <div class="ticketInfo">
-        <div class="col">
-            <div class="TicketRow">
-                <div class="pplType">
-                     <h3>Type:</h3> ADT 22.00
+    <tr th:each="tktObj : ${tktArray}">
+
+        <div class="ticketInfo">
+            <div class="col">
+                <div class="TicketRow">
+                    <div class="pplType">
+                         <h3>Type:</h3> ADT 22.00
+                    </div>
+
+                    <div class="tktNo">
+                        <h3>Number</h3> 235454566
+                    </div>
+
+
+                    <div class="seatId">
+                        <h3>SeatID</h3>
+                        <span th:text="${tktObj.seat}"></span>
+                        Zone: Boxes, Row 1 Col 2
+                    </div>
                 </div>
 
-                <div class="tktNo">
-                    <h3>Number</h3> 235454566
-                </div>
+            </div>
+
+            <div class="col">
 
 
-                <div class="seatId">
-                    <h3>SeatID</h3> BLABLABLA
-                    Zone: Boxes, Row 1 Col 2
-                </div>
+                <img class="tktBarCode" src="code128.png">
             </div>
 
         </div>
-
-        <div class="col">
-
-            <img class="tktBarCode" src="code128.png">
-        </div>
-
     </div>
 
 

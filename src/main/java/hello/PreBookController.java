@@ -22,17 +22,25 @@ import java.util.Map;
 public class PreBookController {
 
 
-    @RequestMapping(value=  "/api/prebook" , method = RequestMethod.GET)
-    public String getPreBookData() {
+    @RequestMapping(value=  "/api/prebook/{performanceId}" , method = RequestMethod.GET)
+    public String getPreBookData(@PathVariable String performanceId) {
         try {
 
             Session session =  HibernateUtil.getSessionFactory().openSession();
 
-            String theaterId = "4";
+            System.out.println("Received at route " + performanceId);
+
+            // get theaterId
+            String qTheaterId = "SELECT per_theater_id FROM performance WHERE per_id = '" + performanceId + "'";
+            List<Object> resultTheater = session.createNativeQuery(qTheaterId).getResultList();
+            String theaterId = resultTheater.get(0).toString();
+
+            System.out.println("theaterId " + theaterId);
+
 
             String q= " SELECT MAX(smp_rowid) AS maxId, MIN(smp_rowid) AS minId, MAX(smp_colid) AS maxColId " +
                     "FROM  seatmap " +
-                    "WHERE smp_theater_id =  4 ";
+                    "WHERE smp_theater_id = '" + theaterId + "' ";
 
             List<Object[]> resultsMaxMin = session.createNativeQuery(q).getResultList();
             System.out.println(resultsMaxMin);
@@ -48,11 +56,11 @@ public class PreBookController {
 
 
             List<SeatMapModel> results =session.createCriteria(SeatMapModel.class)
-                    .add( Restrictions.eq("theaterId", 4) )
+                    .add( Restrictions.eq("theaterId", Integer.parseInt(theaterId)) )
                     .list();
 
             Map<Short, Map<Integer, SeatAttributes>> rowMappings = new HashMap<>();
-            for (short rowId = minId; rowId < maxId; rowId++) {
+            for (short rowId = minId; rowId <= maxId; rowId++) {
                 Map<Integer, SeatAttributes> colMappings = new HashMap<>();
 
                 for (SeatMapModel sMdl : results) {
@@ -76,7 +84,7 @@ public class PreBookController {
                     " ) " +
             "WHERE itm_void =0 " +
                     "AND ord_void =0 AND ord_success =1 " +
-                    "AND ord_performance_id =2 " +
+                    "AND ord_performance_id = '"+ performanceId +"' " +
                     "AND ord_date = '2019-01-07'";
 
             List<Object[]> takenseats = session.createNativeQuery(q)
@@ -84,7 +92,7 @@ public class PreBookController {
 
 //
             List<PerformanceModel> prfList = session.createCriteria(PerformanceModel.class)
-                    .add( Restrictions.eq("id", 2) )
+                    .add( Restrictions.eq("id", Integer.parseInt(performanceId)) )
                     .list();
 
 
@@ -100,6 +108,7 @@ public class PreBookController {
             resultObj.put("maxCols", maxColId);
             resultObj.put("maxRows", maxId);
 
+            System.out.println("Received at route " + performanceId);
 
            // session.close();
             return  ow.writeValueAsString(resultObj);

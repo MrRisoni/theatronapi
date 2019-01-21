@@ -4,13 +4,13 @@ package models;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "pricing")
+@Table(name = "seatfloor")
 public class SeatFloorModel {
 
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "pri_id")
+    @Column(name = "scr_id")
     private int id;
 
     @Column(name = "scr_top")
@@ -27,6 +27,7 @@ public class SeatFloorModel {
 
     @Column(name = "scr_theater_id")
     private int theaterId;
+
 
     @Column(name = "scr_seatname")
     private String seatName;

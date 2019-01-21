@@ -7,7 +7,7 @@ import hello.seatPojos.SeatAttributes;
 import models.HibernateUtil;
 import models.PerformanceModel;
 import models.SeatFloorModel;
-import models.SeatMapModel;
+import models.ZoneModel;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +26,7 @@ public class PreBookController {
     public String getSeatFloor(@PathVariable String theatherId) {
         Session session =  HibernateUtil.getSessionFactory().openSession();
         try {
-            List<SeatMapModel> results =session.createCriteria(SeatFloorModel.class)
+            List<ZoneModel> results =session.createCriteria(ZoneModel.class)
                     .add( Restrictions.eq("theaterId", Integer.parseInt(theatherId)) )
                     .list();
 
@@ -39,7 +39,7 @@ public class PreBookController {
             return ex.getMessage();
         }
     }
-
+/*
     @RequestMapping(value=  "/api/prebook/{performanceId}" , method = RequestMethod.GET)
     public String getPreBookData(@PathVariable String performanceId) {
         try {
@@ -143,5 +143,5 @@ public class PreBookController {
             return ex.getMessage();
         }
     }
-
+*/
 }

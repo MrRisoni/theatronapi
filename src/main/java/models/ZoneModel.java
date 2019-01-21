@@ -1,6 +1,7 @@
 package models;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "zones")
@@ -19,7 +20,15 @@ public class ZoneModel {
 
     @Column(name = "zon_csscolor")
     private String cssColor;
-    
+
+
+    @Column(name = "zon_theater_id")
+    private int theaterId;
+
+
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "scr_zone_id")
+    private List<SeatFloorModel> seats;
 
     public ZoneModel()
     {
@@ -35,8 +44,17 @@ public class ZoneModel {
         return title;
     }
 
-
-    public String getCss() {
+    public String getCssColor() {
         return cssColor;
+    }
+
+
+    public int getTheatherId() {
+        return theaterId;
+    }
+
+
+    public List<SeatFloorModel> getSeats() {
+        return seats;
     }
 }

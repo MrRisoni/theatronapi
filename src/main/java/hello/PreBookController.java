@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import hello.seatPojos.SeatAttributes;
 import models.HibernateUtil;
 import models.PerformanceModel;
+import models.SeatFloorModel;
 import models.SeatMapModel;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
@@ -21,6 +22,23 @@ import java.util.Map;
 @RestController
 public class PreBookController {
 
+    @RequestMapping(value=  "/api/seatfloor/{theatherId}" , method = RequestMethod.GET)
+    public String getSeatFloor(@PathVariable String theatherId) {
+        Session session =  HibernateUtil.getSessionFactory().openSession();
+        try {
+            List<SeatMapModel> results =session.createCriteria(SeatFloorModel.class)
+                    .add( Restrictions.eq("theaterId", Integer.parseInt(theatherId)) )
+                    .list();
+
+            ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+
+            return ow.writeValueAsString(results);
+
+        }
+        catch(Exception ex){
+            return ex.getMessage();
+        }
+    }
 
     @RequestMapping(value=  "/api/prebook/{performanceId}" , method = RequestMethod.GET)
     public String getPreBookData(@PathVariable String performanceId) {

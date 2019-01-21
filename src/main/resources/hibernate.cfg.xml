@@ -27,6 +27,7 @@
         <mapping class="models.PerformanceDateModel"/>
         <mapping class="models.SeatMapModel"/>
         <mapping class="models.CardDetailsModel"/>
+        <mapping class="models.SeatFloorModel"/>
 
 
 

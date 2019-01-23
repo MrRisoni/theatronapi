@@ -20,9 +20,9 @@ SELECT theaterSeats.totalSeats,
         GROUP BY pri_performance_id
     ) AS prices ON prices.pri_performance_id = p.per_id
     JOIN (
-            SELECT smp_theater_id, COUNT(smp_id) AS totalSeats
-            FROM  seatmap
-            GROUP BY smp_theater_id ) AS theaterSeats ON  theaterSeats.smp_theater_id = p.per_theater_id
+            SELECT scr_theater_id, COUNT(scr_id) AS totalSeats
+            FROM  seatfloor
+            GROUP BY scr_theater_id ) AS theaterSeats ON  theaterSeats.smp_theater_id = p.per_theater_id
     LEFT JOIN (
             SELECT  ord_perf_date_id, COUNT(itm_id) AS tickets  FROM order_item
             JOIN orders ON itm_order_id = ord_id

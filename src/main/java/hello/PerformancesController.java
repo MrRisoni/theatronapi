@@ -54,9 +54,9 @@ public class PerformancesController {
                    "        GROUP BY pri_performance_id\n" +
                    "    ) AS prices ON prices.pri_performance_id = p.per_id\n" +
                    "    JOIN (\n" +
-                   "            SELECT smp_theater_id, COUNT(smp_id) AS totalSeats\n" +
-                   "            FROM  seatmap\n" +
-                   "            GROUP BY smp_theater_id ) AS theaterSeats ON  theaterSeats.smp_theater_id = p.per_theater_id\n" +
+                   "            SELECT scr_theater_id, COUNT(scr_id) AS totalSeats\n" +
+                   "            FROM  seatfloor \n" +
+                   "            GROUP BY scr_theater_id ) AS theaterSeats ON  theaterSeats.scr_theater_id = p.per_theater_id\n" +
                    "    LEFT JOIN (\n" +
                    "            SELECT  ord_perf_date_id, COUNT(itm_id) AS tickets  FROM order_item\n" +
                    "            JOIN orders ON itm_order_id = ord_id\n" +

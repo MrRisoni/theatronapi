@@ -22,24 +22,39 @@ import java.util.Map;
 @RestController
 public class PreBookController {
 
+
+
+
     @RequestMapping(value=  "/api/seatfloor/{theatherId}" , method = RequestMethod.GET)
     public String getSeatFloor(@PathVariable String theatherId) {
         Session session =  HibernateUtil.getSessionFactory().openSession();
         try {
-            List<ZoneModel> results =session.createCriteria(ZoneModel.class)
+            List<SeatFloorModel> seatsList =session.createCriteria(SeatFloorModel.class)
+                    .add( Restrictions.eq("theaterId", Integer.parseInt(theatherId)) )
+                    .list();
+
+
+            List<ZoneModel> zoneList =session.createCriteria(ZoneModel.class)
                     .add( Restrictions.eq("theaterId", Integer.parseInt(theatherId)) )
                     .list();
 
             ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
 
-            return ow.writeValueAsString(results);
+            Map<String, Object> resultObj = new HashMap<>();
+
+            resultObj.put("seats", seatsList);
+            resultObj.put("zones", zoneList);
+
+            // session.close();
+            return  ow.writeValueAsString(resultObj);
+
 
         }
         catch(Exception ex){
             return ex.getMessage();
         }
     }
-/*
+
     @RequestMapping(value=  "/api/prebook/{performanceId}" , method = RequestMethod.GET)
     public String getPreBookData(@PathVariable String performanceId) {
         try {
@@ -56,46 +71,13 @@ public class PreBookController {
             System.out.println("theaterId " + theaterId);
 
 
-            String q= " SELECT MAX(smp_rowid) AS maxId, MIN(smp_rowid) AS minId, MAX(smp_colid) AS maxColId " +
-                    "FROM  seatmap " +
-                    "WHERE smp_theater_id = '" + theaterId + "' ";
-
-            List<Object[]> resultsMaxMin = session.createNativeQuery(q).getResultList();
-            System.out.println(resultsMaxMin);
-            short maxId = (Short) resultsMaxMin.get(0)[0];
-            short minId = (Short) resultsMaxMin.get(0)[1];
-            short maxColId = (Short) resultsMaxMin.get(0)[2];
-
-            System.out.println(minId + " " + maxId);
-
 
             ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-            System.out.println("ob writer  ");
 
 
-            List<SeatMapModel> results =session.createCriteria(SeatMapModel.class)
-                    .add( Restrictions.eq("theaterId", Integer.parseInt(theaterId)) )
-                    .list();
 
-            Map<Short, Map<Integer, SeatAttributes>> rowMappings = new HashMap<>();
-            for (short rowId = minId; rowId <= maxId; rowId++) {
-                Map<Integer, SeatAttributes> colMappings = new HashMap<>();
 
-                for (SeatMapModel sMdl : results) {
-                    if (sMdl.getRowId() == rowId) {
-                        SeatAttributes stAtr = new SeatAttributes();
-                        stAtr.setSeatName(sMdl.getSeatName());
-                        stAtr.setZoneCss(sMdl.getZoneInfo().getCss());
-                        stAtr.setZoneId(sMdl.getZoneInfo().getId());
-
-                        colMappings.put(sMdl.getColId(), stAtr);
-                    }
-                }
-
-                rowMappings.put(rowId, colMappings);
-            }
-
-            q= " SELECT itm_seatno FROM order_item " +
+            String q= " SELECT itm_seatno FROM order_item " +
                     "JOIN orders ON ord_id = itm_order_id " +
                     " JOIN performance p ON ( p.per_id = ord_performance_id " +
                     " AND p.per_season_id = ord_season_id " +
@@ -122,11 +104,7 @@ public class PreBookController {
             else {
                 resultObj.put("taken", null);
             }
-            resultObj.put("seatmap", rowMappings);
-            resultObj.put("maxCols", maxColId);
-            resultObj.put("maxRows", maxId);
-
-            System.out.println("Received at route " + performanceId);
+                System.out.println("Received at route " + performanceId);
 
            // session.close();
             return  ow.writeValueAsString(resultObj);
@@ -143,5 +121,5 @@ public class PreBookController {
             return ex.getMessage();
         }
     }
-*/
+
 }

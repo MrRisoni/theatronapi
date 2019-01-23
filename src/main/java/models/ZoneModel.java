@@ -1,7 +1,6 @@
 package models;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name = "zones")
@@ -25,10 +24,6 @@ public class ZoneModel {
     @Column(name = "zon_theater_id")
     private int theaterId;
 
-
-    @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "scr_zone_id")
-    private List<SeatFloorModel> seats;
 
     public ZoneModel()
     {
@@ -54,7 +49,4 @@ public class ZoneModel {
     }
 
 
-    public List<SeatFloorModel> getSeats() {
-        return seats;
-    }
 }

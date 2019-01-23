@@ -19,7 +19,6 @@ README.html
 /node_modules
 .mvn/wrapper
 spring_app.log
-*.php
 *.gz
 *.csv
 *.docs

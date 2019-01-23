@@ -28,6 +28,10 @@ public class SeatFloorModel {
     @Column(name = "scr_theater_id")
     private int theaterId;
 
+    @Column(name = "scr_zone_id")
+    private int zoneId;
+
+
 
     @Column(name = "scr_seatname")
     private String seatName;
@@ -90,5 +94,9 @@ public class SeatFloorModel {
 
     public void setSeatName(String seatName) {
         this.seatName = seatName;
+    }
+
+    public int getZoneId() {
+        return zoneId;
     }
 }

@@ -127,4 +127,61 @@ for ($lvl = 1; $lvl <= 2; $lvl++) {
 }
 
 
+
+
+// right side of boxes
+
+
+
+
+$left = 1950;
+
+/// balcony and boxes
+for ($lvl = 1; $lvl <= 2; $lvl++) {
+
+    $top = 700;
+
+    $left -= 130;
+
+    for ($balcon = 1; $balcon < 10; $balcon++) {
+
+        $seatTop = $top;
+        $seatLeft = $left;
+
+        for ($seatIdx = 0; $seatIdx < 2; $seatIdx++) {
+
+            $seatTop -= 15;
+            if ($seatIdx % 2 == 0) {
+                $seatLeft -= 15;
+            }
+
+            $zone = 3;
+            if ($lvl > 1) {
+                $zone = 4;
+            }
+
+            $seatName = $zonesArr[$zone]."_LVL".$balcon."SID".$seatIdx;
+
+
+            $sql = " INSERT INTO `seatfloor`( `scr_top`, `scr_left`, `scr_zone_id`, `scr_theater_id`,`scr_seatname`) VALUES ('" . $seatTop . "','" . $seatLeft . "','" . $zone . "','" . $theaterId . "', '".$seatName."')";
+
+            
+        mysqli_query($conVariable, $sql);
+        echo $sql;
+        echo mysqli_error($conVariable);
+        echo PHP_EOL;    
+
+        }
+
+          $top -= 35;
+    $left += 10;
+
+    }
+
+  
+
+}
+
+
+
 ?>

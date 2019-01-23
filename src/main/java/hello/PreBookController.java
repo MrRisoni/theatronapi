@@ -23,38 +23,6 @@ import java.util.Map;
 public class PreBookController {
 
 
-
-
-    @RequestMapping(value=  "/api/seatfloor/{theatherId}" , method = RequestMethod.GET)
-    public String getSeatFloor(@PathVariable String theatherId) {
-        Session session =  HibernateUtil.getSessionFactory().openSession();
-        try {
-            List<SeatFloorModel> seatsList =session.createCriteria(SeatFloorModel.class)
-                    .add( Restrictions.eq("theaterId", Integer.parseInt(theatherId)) )
-                    .list();
-
-
-            List<ZoneModel> zoneList =session.createCriteria(ZoneModel.class)
-                    .add( Restrictions.eq("theaterId", Integer.parseInt(theatherId)) )
-                    .list();
-
-            ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-
-            Map<String, Object> resultObj = new HashMap<>();
-
-            resultObj.put("seats", seatsList);
-            resultObj.put("zones", zoneList);
-
-            // session.close();
-            return  ow.writeValueAsString(resultObj);
-
-
-        }
-        catch(Exception ex){
-            return ex.getMessage();
-        }
-    }
-
     @RequestMapping(value=  "/api/prebook/{performanceId}" , method = RequestMethod.GET)
     public String getPreBookData(@PathVariable String performanceId) {
         try {
@@ -96,6 +64,18 @@ public class PreBookController {
                     .list();
 
 
+
+            List<SeatFloorModel> seatsList =session.createCriteria(SeatFloorModel.class)
+                    .add( Restrictions.eq("theaterId", Integer.parseInt(theaterId)) )
+                    .list();
+
+
+            List<ZoneModel> zoneList =session.createCriteria(ZoneModel.class)
+                    .add( Restrictions.eq("theaterId", Integer.parseInt(theaterId)) )
+                    .list();
+
+
+
             Map<String, Object> resultObj = new HashMap<>();
             resultObj.put("performance", prfList.get(0));
             if (takenseats.size() >0) {
@@ -105,6 +85,9 @@ public class PreBookController {
                 resultObj.put("taken", null);
             }
                 System.out.println("Received at route " + performanceId);
+
+            resultObj.put("seats", seatsList);
+            resultObj.put("zones", zoneList);
 
            // session.close();
             return  ow.writeValueAsString(resultObj);

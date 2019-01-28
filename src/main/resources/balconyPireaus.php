@@ -6,7 +6,7 @@ $conVariable = new mysqli('localhost', 'root', '', 'theatron');
         mysqli_query($conVariable, "DELETE FROM seatfloor WHERE scr_zone_id = 7");
 
 
-$startTop = 510;
+$startTop = 450;
 $startLeft =100;
 
 
@@ -33,7 +33,7 @@ $startLeft +=6;
 
 
 
-$startTop = 300;
+$startTop = 250;
 $startLeft = 200;
 for ($q = 0 ; $q < 20; $q++) {
 

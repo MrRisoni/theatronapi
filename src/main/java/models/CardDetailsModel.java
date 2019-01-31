@@ -4,13 +4,13 @@ package models;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "zones")
+@Table(name = "card_details")
 public class CardDetailsModel {
 
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ord_id")
+    @Column(name = "crd_id")
     private int id;
 
 

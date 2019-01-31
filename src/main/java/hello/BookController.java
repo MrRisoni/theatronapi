@@ -2,9 +2,9 @@ package hello;
 
 
 import com.google.gson.Gson;
-import docs.BarCodeGenerator;
 import models.*;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import hello.bookPojos.BookPayload;
@@ -47,6 +47,7 @@ public class BookController {
             System.out.println(testObj.getPerformanceData());
 
             Session session =  HibernateUtil.getSessionFactory().openSession();
+            Transaction tx = session.beginTransaction();
 
             OrderModel ord = new OrderModel();
             ord.setEmail(testObj.getContactData().getMail());
@@ -73,7 +74,7 @@ public class BookController {
             session.persist(card);
 
 
-
+            tx.commit();
             session.close();
 
 
@@ -95,7 +96,7 @@ public class BookController {
 
 
            // generate docs
-            System.out.println("start docs ");
+          /*  System.out.println("start docs ");
 
             PDFGenerator pdfgen = new PDFGenerator(testObj);
             pdfgen.makeAllTicketsPdf();
@@ -104,7 +105,7 @@ public class BookController {
 
             System.out.println("barcode ");
             BarCodeGenerator barGenny = new BarCodeGenerator();
-            barGenny.makeBarCode();
+            barGenny.makeBarCode();*/
 
 
 

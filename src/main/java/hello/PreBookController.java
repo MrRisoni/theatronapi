@@ -24,7 +24,7 @@ public class PreBookController {
 
 
     @RequestMapping(value=  "/api/prebook/{performanceId}" , method = RequestMethod.GET)
-    public String getPreBookData(@PathVariable String performanceId) {
+    public  Map<String, Object> getPreBookData(@PathVariable String performanceId) {
         try {
 
             Session session =  HibernateUtil.getSessionFactory().openSession();
@@ -90,7 +90,7 @@ public class PreBookController {
             resultObj.put("zones", zoneList);
 
            // session.close();
-            return  ow.writeValueAsString(resultObj);
+            return resultObj;
 
 
         }
@@ -101,7 +101,7 @@ public class PreBookController {
             System.out.println(ex.getMessage());
             ex.printStackTrace();
 
-            return ex.getMessage();
+            return null;
         }
     }
 

@@ -13,6 +13,7 @@ import repos.SprTheaterRepository;
 
 import javax.persistence.EntityManager;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @CrossOrigin
 @RestController
@@ -57,7 +58,14 @@ public class PreBookController {
                     .add( Restrictions.eq("id", Integer.parseInt(performanceId)) )
                     .list();
 
-            Set<SeatFloorModel> seatsList =theatronObj.getSeatMapping();
+            List<SeatFloorModel> seatsListResult = em.createQuery("SELECT stfm FROM SeatFloorModel stfm " +
+                    " JOIN stfm.theatronObj " +
+                    "WHERE stfm.theatronObj.id = :theater_id", SeatFloorModel.class).setParameter("theater_id",theaterLid).getResultList();
+            List<SeatFloorModel> seatsList = seatsListResult.stream().map(seatItm -> {
+                seatItm.setTheatronObj(null);// stops infinite recursion in querying
+                return  seatItm;
+            }).collect(Collectors.toList());
+
 
             List<ZoneModel> zoneList =session.createCriteria(ZoneModel.class)
                     .add( Restrictions.eq("theaterId", Integer.parseInt(theaterId)) )

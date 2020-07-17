@@ -28,7 +28,7 @@ public class SeatFloorModel {
     @Column(name = "scr_seatname")
     private String seatName;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name ="scr_theater_id")
     private TheaterModel theatronObj;
 

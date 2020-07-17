@@ -16,8 +16,9 @@ public class ZoneModel {
     @Column(name = "zon_csscolor")
     private String cssColor;
 
-    @Column(name = "zon_theater_id")
-    private int theaterId;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name ="zon_theater_id")
+    private TheaterModel theatronObj;
 
     public ZoneModel()
     {
@@ -35,7 +36,17 @@ public class ZoneModel {
         return cssColor;
     }
 
-    public int getTheatherId() {
-        return theaterId;
+    public void setId(int id) {
+        this.id = id;
     }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setCssColor(String cssColor) {
+        this.cssColor = cssColor;
+    }
+
+
 }

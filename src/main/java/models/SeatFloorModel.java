@@ -22,15 +22,15 @@ public class SeatFloorModel {
     @Column(name = "scr_colid")
     private int colId;
 
-    @Column(name = "scr_theater_id")
-    private int theaterId;
-
     @Column(name = "scr_zone_id")
     private int zoneId;
 
-
     @Column(name = "scr_seatname")
     private String seatName;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name ="scr_theater_id")
+    private TheaterModel theatronObj;
 
     public SeatFloorModel(){}
 
@@ -74,14 +74,6 @@ public class SeatFloorModel {
         this.colId = colId;
     }
 
-    public int getTheaterId() {
-        return theaterId;
-    }
-
-    public void setTheaterId(int theaterId) {
-        this.theaterId = theaterId;
-    }
-
     public String getSeatName() {
         return seatName;
     }
@@ -92,5 +84,13 @@ public class SeatFloorModel {
 
     public int getZoneId() {
         return zoneId;
+    }
+
+    public TheaterModel getTheatronObj() {
+        return theatronObj;
+    }
+
+    public void setTheatronObj(TheaterModel theatronObj) {
+        this.theatronObj = theatronObj;
     }
 }

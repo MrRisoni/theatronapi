@@ -1,45 +1,42 @@
 package hello;
 
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import hello.bookPojos.Seat;
 import hello.seatPojos.SeatAttributes;
-import models.HibernateUtil;
-import models.PerformanceModel;
-import models.SeatFloorModel;
-import models.ZoneModel;
+import models.*;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import repos.SprTheaterRepository;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import javax.persistence.EntityManager;
+import java.util.*;
 
 @CrossOrigin
 @RestController
 public class PreBookController {
 
+    @Autowired
+    SprTheaterRepository theaterRepo;
 
     @RequestMapping(value=  "/api/prebook/{performanceId}" , method = RequestMethod.GET)
     public  Map<String, Object> getPreBookData(@PathVariable String performanceId) {
         try {
 
             Session session =  HibernateUtil.getSessionFactory().openSession();
+            EntityManager em = HibernateUtil.getEM();
 
             String qTheaterId = "SELECT per_theater_id FROM performance WHERE per_id = '" + performanceId + "'";
             List<Object> resultTheater = session.createNativeQuery(qTheaterId).getResultList();
             String theaterId = resultTheater.get(0).toString();
+            Integer theaterLid = Integer.parseInt(theaterId);
+
+            Optional<TheaterModel> fetch = theaterRepo.findById(theaterLid);
+            TheaterModel theatronObj = fetch.orElse(null);
 
             System.out.println("theaterId " + theaterId);
-
-
-
-            ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-
-
 
 
             String q= " SELECT itm_seatno FROM order_item " +
@@ -60,12 +57,7 @@ public class PreBookController {
                     .add( Restrictions.eq("id", Integer.parseInt(performanceId)) )
                     .list();
 
-
-
-            List<SeatFloorModel> seatsList =session.createCriteria(SeatFloorModel.class)
-                    .add( Restrictions.eq("theaterId", Integer.parseInt(theaterId)) )
-                    .list();
-
+            Set<SeatFloorModel> seatsList =theatronObj.getSeatMapping();
 
             List<ZoneModel> zoneList =session.createCriteria(ZoneModel.class)
                     .add( Restrictions.eq("theaterId", Integer.parseInt(theaterId)) )
@@ -86,20 +78,15 @@ public class PreBookController {
             resultObj.put("seats", seatsList);
             resultObj.put("zones", zoneList);
 
-           // session.close();
+
             return resultObj;
-
-
         }
         catch (Exception ex)
         {
             System.out.println("ERROR ");
-
             System.out.println(ex.getMessage());
             ex.printStackTrace();
-
             return null;
         }
     }
-
 }

@@ -1,9 +1,7 @@
 package hello;
 
-
 import com.google.gson.Gson;
 import models.*;
-import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +13,6 @@ import docs.PDFGenerator;
 @RestController
 public class BookController {
 
-
     @PostMapping(value = "/api/book",
             consumes = {MediaType.APPLICATION_JSON_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE}
@@ -25,10 +22,6 @@ public class BookController {
 
         try {
             Gson g = new Gson();
-
-            System.out.println("print json params");
-
-            System.out.println();
 
             System.out.println("print post params");
             System.out.println(postData);
@@ -46,7 +39,7 @@ public class BookController {
 
             System.out.println(testObj.getPerformanceData());
 
-            Session session =  HibernateUtil.getSessionFactory().openSession();
+            Session session = HibernateUtil.getSessionFactory().openSession();
             Transaction tx = session.beginTransaction();
 
             OrderModel ord = new OrderModel();
@@ -77,7 +70,10 @@ public class BookController {
             tx.commit();
             session.close();
 
-
+            return "foo";
+        }
+    }
+}
            /* HttpRequests req = new HttpRequests("http://localhost:3000/api/banks/ok");
             Payment pay = new Payment(req);
 
@@ -103,9 +99,7 @@ public class BookController {
 
             System.out.println("invoice ");
 
-            System.out.println("barcode ");
-            BarCodeGenerator barGenny = new BarCodeGenerator();
-            barGenny.makeBarCode();*/
+      }
 
 
 

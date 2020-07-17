@@ -22,5 +22,4 @@ spring_app.log
 *.gz
 *.csv
 *.docs
-*.png
 *.pdf

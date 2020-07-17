@@ -3,12 +3,11 @@ package hello;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
 import hello.otherPojos.PerformancesResult;
 import models.HibernateUtil;
 import org.hibernate.Session;
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-
 @CrossOrigin
 @RestController
 public class PerformancesController {
@@ -26,13 +24,10 @@ public class PerformancesController {
     @Value("${app.today}")
     private String currentDate;
 
-
     @RequestMapping(value=  "/api/performances" , method = RequestMethod.GET)
     public List<PerformancesResult> getPerformancesList()
     {
         Session session = null;
-        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-
 
         try {
             session = HibernateUtil.getSessionFactory().openSession();
@@ -74,8 +69,8 @@ public class PerformancesController {
             List<Object[]> data = session.createNativeQuery(q)
                     .getResultList();
 
-
             ArrayList<PerformancesResult> resultList = new ArrayList<PerformancesResult>();
+            DecimalFormat df = new DecimalFormat("###.###");
 
             for (Object[] obj : data) {
                 PerformancesResult prf = new PerformancesResult();
@@ -110,9 +105,7 @@ public class PerformancesController {
 
                 resultList.add(prf);
             }
-
             return  resultList;
-
         }
         catch(Exception ex)
         {
@@ -120,11 +113,5 @@ public class PerformancesController {
             return null;
         }
     }
-
-
-
-
-
-
 
 }

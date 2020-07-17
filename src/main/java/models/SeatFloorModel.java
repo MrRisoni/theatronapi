@@ -1,13 +1,10 @@
 package models;
 
-
 import javax.persistence.*;
 
 @Entity
 @Table(name = "seatfloor")
 public class SeatFloorModel {
-
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "scr_id")
@@ -32,13 +29,10 @@ public class SeatFloorModel {
     private int zoneId;
 
 
-
     @Column(name = "scr_seatname")
     private String seatName;
 
-
     public SeatFloorModel(){}
-
 
     public int getId() {
         return id;

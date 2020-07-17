@@ -5,7 +5,6 @@ import javax.persistence.*;
 @Entity
 @Table(name = "actors")
 public class ActorsModel {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "act_id")
@@ -15,14 +14,12 @@ public class ActorsModel {
     @JoinColumn (name="act_people_id")
     private PeopleModel human;
 
-    
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn (name="act_character_id")
     private CharacterModel role;
   
     public ActorsModel()
     {}
-
 
     public int getId() {
         return id;
@@ -39,6 +36,4 @@ public class ActorsModel {
     public CharacterModel getRole() {
         return role;
     }
-
-   
 }

@@ -29,9 +29,6 @@ public class PreBookController {
 
             Session session =  HibernateUtil.getSessionFactory().openSession();
 
-            System.out.println("Received at route " + performanceId);
-
-            // get theaterId
             String qTheaterId = "SELECT per_theater_id FROM performance WHERE per_id = '" + performanceId + "'";
             List<Object> resultTheater = session.createNativeQuery(qTheaterId).getResultList();
             String theaterId = resultTheater.get(0).toString();

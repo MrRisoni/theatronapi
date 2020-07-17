@@ -5,8 +5,6 @@ import javax.persistence.*;
 @Entity
 @Table(name = "pricing")
 public class PricingModel {
-
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "pri_id")
@@ -16,22 +14,16 @@ public class PricingModel {
     @JoinColumn (name="pri_zone_id")
     private ZoneModel zone;
 
-
-
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn (name="pri_type_id")
     private TypeModel typ;
 
-
     @Column(name = "pri_price")
     private float price;
 
-
     public PricingModel()
     {
-        
     }
-
 
     public int getId() {
         return id;
@@ -44,7 +36,6 @@ public class PricingModel {
     public TypeModel getTyp() {
         return typ;
     }
-
 
     public float getPrice() {
         return price;

@@ -5,20 +5,16 @@ import javax.persistence.*;
 @Entity
 @Table(name = "characters")
 public class CharacterModel {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "char_id")
     private int id;
 
-
     @Column(name = "char_name")
     private String name;
 
-  
-    public CharacterModel()
+      public CharacterModel()
     {}
-
 
     public int getId() {
         return id;
@@ -32,7 +28,4 @@ public class CharacterModel {
         return name;
     }
 
-  
-
-   
 }

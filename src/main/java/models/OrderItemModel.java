@@ -5,8 +5,6 @@ import javax.persistence.*;
 @Entity
 @Table(name = "order_item")
 public class OrderItemModel {
-
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "itm_id")
@@ -14,7 +12,6 @@ public class OrderItemModel {
 
     @Column(name = "itm_order_id")
     private int orderId;
-
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn (name="itm_type_id")
@@ -26,15 +23,12 @@ public class OrderItemModel {
     @Column(name = "itm_ticket")
     private String tktNo;
 
-
     @Column(name = "itm_void")
     private Boolean isVoid;
 
     public OrderItemModel()
     {
-
     }
-
 
     public void setOrderId(int orderId) {
         this.orderId = orderId;
@@ -43,7 +37,6 @@ public class OrderItemModel {
     public int getId() {
         return id;
     }
-
 
     public TypeModel getTyp() {
         return typ;
@@ -61,12 +54,11 @@ public class OrderItemModel {
         return isVoid;
     }
 
-
     public void setId(int id) {
         this.id = id;
     }
 
-       public void setTyp(TypeModel typ) {
+    public void setTyp(TypeModel typ) {
         this.typ = typ;
     }
 

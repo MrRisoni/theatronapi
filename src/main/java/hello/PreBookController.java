@@ -1,11 +1,9 @@
 package hello;
 
 import models.*;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import repos.SprPerformanceRepository;
-import repos.SprTheaterRepository;
 
 import javax.persistence.EntityManager;
 import java.util.*;
@@ -46,7 +44,6 @@ public class PreBookController {
             List<Object[]> takenseats = em.createNativeQuery(q)
                     .getResultList();
 
-
             List<SeatFloorModel> seatsListResult = em.createQuery("SELECT stfm FROM SeatFloorModel stfm " +
                     " JOIN stfm.theatronObj " +
                     "WHERE stfm.theatronObj.id = :theater_id", SeatFloorModel.class).setParameter("theater_id",theaterLid).getResultList();
@@ -54,7 +51,6 @@ public class PreBookController {
                 seatItm.setTheatronObj(null);// stops infinite recursion in querying
                 return  seatItm;
             }).collect(Collectors.toList());
-
 
             List<ZoneModel> zoneListResults = em.createQuery("SELECT zon FROM ZoneModel zon " +
                     " JOIN zon.theatronObj " +
@@ -65,7 +61,6 @@ public class PreBookController {
                 return  zonItm;
             }).collect(Collectors.toList());
 
-
             Map<String, Object> resultObj = new HashMap<>();
             resultObj.put("performance", perfObj);
             if (takenseats.size() >0) {
@@ -74,11 +69,9 @@ public class PreBookController {
             else {
                 resultObj.put("taken", null);
             }
-                System.out.println("Received at route " + performanceId);
 
             resultObj.put("seats", seatsList);
             resultObj.put("zones", zoneList);
-
 
             return resultObj;
         }

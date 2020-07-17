@@ -1,14 +1,10 @@
 package hello;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
-import hello.bookPojos.Seat;
-import hello.seatPojos.SeatAttributes;
 import models.*;
-import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import repos.SprPerformanceRepository;
 import repos.SprTheaterRepository;
 
 import javax.persistence.EntityManager;
@@ -20,25 +16,22 @@ import java.util.stream.Collectors;
 public class PreBookController {
 
     @Autowired
-    SprTheaterRepository theaterRepo;
+    SprPerformanceRepository perfRepo;
 
     @RequestMapping(value=  "/api/prebook/{performanceId}" , method = RequestMethod.GET)
-    public  Map<String, Object> getPreBookData(@PathVariable String performanceId) {
+    public  Map<String, Object> getPreBookData(@PathVariable int performanceId) {
         try {
 
-            Session session =  HibernateUtil.getSessionFactory().openSession();
             EntityManager em = HibernateUtil.getEM();
 
             String qTheaterId = "SELECT per_theater_id FROM performance WHERE per_id = '" + performanceId + "'";
-            List<Object> resultTheater = session.createNativeQuery(qTheaterId).getResultList();
+            List<Object> resultTheater = em.createNativeQuery(qTheaterId).getResultList();
             String theaterId = resultTheater.get(0).toString();
             Integer theaterLid = Integer.parseInt(theaterId);
 
-            Optional<TheaterModel> fetch = theaterRepo.findById(theaterLid);
-            TheaterModel theatronObj = fetch.orElse(null);
 
-            System.out.println("theaterId " + theaterId);
-
+            Optional<PerformanceModel> fetch = perfRepo.findById(performanceId);
+            PerformanceModel perfObj = fetch.orElse(null);
 
             String q= " SELECT itm_seatno FROM order_item " +
                     "JOIN orders ON ord_id = itm_order_id " +
@@ -50,13 +43,9 @@ public class PreBookController {
                     "AND ord_performance_id = '"+ performanceId +"' " +
                     "AND ord_date = '2019-01-07'";
 
-            List<Object[]> takenseats = session.createNativeQuery(q)
+            List<Object[]> takenseats = em.createNativeQuery(q)
                     .getResultList();
 
-//
-            List<PerformanceModel> prfList = session.createCriteria(PerformanceModel.class)
-                    .add( Restrictions.eq("id", Integer.parseInt(performanceId)) )
-                    .list();
 
             List<SeatFloorModel> seatsListResult = em.createQuery("SELECT stfm FROM SeatFloorModel stfm " +
                     " JOIN stfm.theatronObj " +
@@ -78,7 +67,7 @@ public class PreBookController {
 
 
             Map<String, Object> resultObj = new HashMap<>();
-            resultObj.put("performance", prfList.get(0));
+            resultObj.put("performance", perfObj);
             if (takenseats.size() >0) {
                 resultObj.put("taken", takenseats.get(0));
             }

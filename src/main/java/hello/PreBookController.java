@@ -67,10 +67,14 @@ public class PreBookController {
             }).collect(Collectors.toList());
 
 
-            List<ZoneModel> zoneList =session.createCriteria(ZoneModel.class)
-                    .add( Restrictions.eq("theaterId", Integer.parseInt(theaterId)) )
-                    .list();
+            List<ZoneModel> zoneListResults = em.createQuery("SELECT zon FROM ZoneModel zon " +
+                    " JOIN zon.theatronObj " +
+                    "WHERE zon.theatronObj.id = :theater_id", ZoneModel.class).setParameter("theater_id",theaterLid).getResultList();
 
+            List<ZoneModel> zoneList = zoneListResults.stream().map(zonItm -> {
+               // zonItm.setTheatronObj(null);// stops infinite recursion in querying
+                return  zonItm;
+            }).collect(Collectors.toList());
 
 
             Map<String, Object> resultObj = new HashMap<>();

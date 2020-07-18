@@ -76,13 +76,23 @@ public class BookController {
             OrderItemModel ordItm = new OrderItemModel();
             ordItm.setSeatNo(testObj.getPeople()[0].getSeat());
             ordItm.setOrderId(ord.getId());
+            ordItm.setVoid(true);
+            ordItm.setPrice(10.2f);
+            ordItm.setTktNo("123340002");
+            TypeModel typ = new TypeModel();
+            typ.setId(1);
+            ordItm.setTyp(typ);
             orderItemRepo.save(ordItm);
 
 
             CardDetailsModel card = new CardDetailsModel();
             card.setCardType(testObj.getCardData().getType());
             card.setOrderItem(ord);
+            card.setCardBin(testObj.getCardData().getNumber().substring(0,6));
+            card.setCardLast(testObj.getCardData().getNumber().substring(testObj.getCardData().getNumber().length() - 4));
+            card.setCardHolder(testObj.getCardData().getCardHolder());
             cardRepo.save(card);
+            System.out.println("Card Saved");
 
 
             return "foo";

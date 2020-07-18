@@ -26,6 +26,9 @@ public class OrderItemModel {
     @Column(name = "itm_void")
     private Boolean isVoid;
 
+    @Column(name = "itm_price")
+    private float price;
+
     public OrderItemModel()
     {
     }
@@ -72,5 +75,13 @@ public class OrderItemModel {
 
     public void setVoid(Boolean aVoid) {
         isVoid = aVoid;
+    }
+
+    public float getPrice() {
+        return price;
+    }
+
+    public void setPrice(float price) {
+        this.price = price;
     }
 }

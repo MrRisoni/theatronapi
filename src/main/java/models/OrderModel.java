@@ -1,5 +1,7 @@
 package models;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
@@ -18,7 +20,7 @@ public class OrderModel {
 
     @Column(name = "ord_date")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date plays_one;
+    private Date performanceDate;
 
     @Column(name = "ord_name")
     private String name;
@@ -32,8 +34,25 @@ public class OrderModel {
     @Column(name = "ord_email")
     private String email ;
 
+    @Column(name="ord_ccfees")
+    private float ccfees;
+
+    @Column(name="ord_tickets")
+    private float ticketsPrice;
+
+    @Column(name="ord_total")
+    private float total;
+
     @Column(name = "ord_void")
     private Boolean isVoid;
+
+    @Column(name = "ord_success")
+    private Boolean success;
+
+    @Column(name="ord_created_at")
+    @Temporal(TemporalType.TIMESTAMP)
+    @CreationTimestamp
+    private Date created_at;
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "itm_order_id")
@@ -55,8 +74,8 @@ public class OrderModel {
         return name;
     }
 
-    public Date getPlays_one() {
-        return plays_one;
+    public Date getPerformanceDate() {
+        return performanceDate;
     }
 
     public Boolean getVoid() {
@@ -71,8 +90,8 @@ public class OrderModel {
         this.perform = perform;
     }
 
-    public void setPlays_one(Date plays_one) {
-        this.plays_one = plays_one;
+    public void setPerformanceDate(Date performanceDate) {
+        this.performanceDate = performanceDate;
     }
 
     public void setName(String name) {
@@ -113,5 +132,45 @@ public class OrderModel {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Date getCreated_at() {
+        return created_at;
+    }
+
+    public void setCreated_at(Date created_at) {
+        this.created_at = created_at;
+    }
+
+    public float getCcfees() {
+        return ccfees;
+    }
+
+    public void setCcfees(float ccfees) {
+        this.ccfees = ccfees;
+    }
+
+    public float getTicketsPrice() {
+        return ticketsPrice;
+    }
+
+    public void setTicketsPrice(float ticketsPrice) {
+        this.ticketsPrice = ticketsPrice;
+    }
+
+    public float getTotal() {
+        return total;
+    }
+
+    public void setTotal(float total) {
+        this.total = total;
+    }
+
+    public Boolean getSuccess() {
+        return success;
+    }
+
+    public void setSuccess(Boolean success) {
+        this.success = success;
     }
 }

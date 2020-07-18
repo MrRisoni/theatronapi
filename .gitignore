@@ -16,6 +16,7 @@ README.html
 *.iml
 .idea
 .vscode
+/fakeNodejsBankAPI/node_modules
 /node_modules
 .mvn/wrapper
 spring_app.log

@@ -2,21 +2,33 @@ package hello;
 
 import com.google.gson.Gson;
 import models.*;
-import org.hibernate.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import hello.bookPojos.BookPayload;
 import docs.PDFGenerator;
+import repos.SprCardDetailsRepository;
+import repos.SprOrderItemRepository;
+import repos.SprOrderRepository;
+import java.text.SimpleDateFormat;
 
 
 @CrossOrigin
 @RestController
 public class BookController {
 
+    @Autowired
+    SprOrderRepository orderRepo;
+
+    @Autowired
+    SprOrderItemRepository orderItemRepo;
+
+    @Autowired
+    SprCardDetailsRepository cardRepo;
+
     @PostMapping(value = "/api/book",
             consumes = {MediaType.APPLICATION_JSON_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE}
-
     )
     public String bookSeats(@RequestBody Object postData) {
 
@@ -39,38 +51,43 @@ public class BookController {
 
             System.out.println(testObj.getPerformanceData());
 
-            Session session = HibernateUtil.getSessionFactory().openSession();
-            Transaction tx = session.beginTransaction();
 
             OrderModel ord = new OrderModel();
+            ord.setVoid(false);
+            ord.setMobile(testObj.getContactData().getMobile());
             ord.setEmail(testObj.getContactData().getMail());
             ord.setSurname(testObj.getContactData().getSurname());
+            ord.setName(testObj.getContactData().getName());
+            ord.setCcfees(2.25f);
+            ord.setTicketsPrice(104f);
+            ord.setTotal(56f);
+            ord.setSuccess(true);
+            ord.setPerformanceDate(new SimpleDateFormat("yyyy-MM-dd").parse(testObj.getPerformanceData().getDate()));
 
             PerformanceModel perfMdl = new PerformanceModel();
             perfMdl.setId(Integer.parseInt(testObj.getPerformanceData().getId()));
 
             ord.setPerform(perfMdl);
 
-            session.persist(ord);
+            orderRepo.save(ord);
             System.out.println(ord.getId());
 
 
             OrderItemModel ordItm = new OrderItemModel();
             ordItm.setSeatNo(testObj.getPeople()[0].getSeat());
             ordItm.setOrderId(ord.getId());
-            session.persist(ordItm);
+            orderItemRepo.save(ordItm);
 
 
             CardDetailsModel card = new CardDetailsModel();
             card.setCardType(testObj.getCardData().getType());
             card.setOrderItem(ord);
-            session.persist(card);
+            cardRepo.save(card);
 
-
-            tx.commit();
-            session.close();
 
             return "foo";
+        } catch (Exception ex) {
+            return "err on params + " + ex.getMessage();
         }
     }
 }
@@ -91,7 +108,7 @@ public class BookController {
         return g.toJson(bookCtrlResponse); */
 
 
-           // generate docs
+// generate docs
           /*  System.out.println("start docs ");
 
             PDFGenerator pdfgen = new PDFGenerator(testObj);
@@ -119,4 +136,4 @@ System.out.println("Finished");
 
 
 
-}
+}*/

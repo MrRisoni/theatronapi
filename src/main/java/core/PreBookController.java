@@ -61,13 +61,15 @@ public class PreBookController {
             }).collect(Collectors.toList());
 
             Map<String, Object> resultObj = new HashMap<>();
-            resultObj.put("performance", perfObj);
+            //resultObj.put("performance", perfObj);
             if (takenseats.size() >0) {
-                resultObj.put("taken", takenseats.get(0));
+                resultObj.put("taken", takenseats);
             }
             else {
                 resultObj.put("taken", null);
             }
+
+            resultObj.put("pricesList", perfObj.getPricesList());
 
             resultObj.put("seats", seatsList);
             resultObj.put("zones", zoneList);

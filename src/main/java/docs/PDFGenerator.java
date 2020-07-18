@@ -78,6 +78,7 @@ public class PDFGenerator {
                     .toUri()
                     .toURL()
                     .toString();
+
             renderer.setDocumentFromString(xHtml, baseUrl);
             renderer.layout();
 
@@ -95,9 +96,12 @@ public class PDFGenerator {
             OutputStream outputStream = new FileOutputStream(pdfName + ".pdf");
             render.createPDF(outputStream);
             outputStream.close();
+            System.out.println("PDF SAVED OK !!!!");
         }
         catch(Exception ex){
             ex.getMessage();
+            System.out.println("PDF ERROR");
+
         }
     }
 

@@ -94,6 +94,8 @@ public class BookController {
             cardRepo.save(card);
             System.out.println("Card Saved");
 
+            PDFGenerator pdfgen = new PDFGenerator(testObj);
+            pdfgen.makeAllTicketsPdf();
 
             return "foo";
         } catch (Exception ex) {

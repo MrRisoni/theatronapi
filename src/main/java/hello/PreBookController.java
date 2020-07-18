@@ -27,7 +27,6 @@ public class PreBookController {
             String theaterId = resultTheater.get(0).toString();
             Integer theaterLid = Integer.parseInt(theaterId);
 
-
             Optional<PerformanceModel> fetch = perfRepo.findById(performanceId);
             PerformanceModel perfObj = fetch.orElse(null);
 

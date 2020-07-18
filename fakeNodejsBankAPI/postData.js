@@ -36,6 +36,6 @@ const postObj = {
 axios
   .post("http://localhost:8080/api/book", postObj)
   .then(responseObj => {
-    const responseData = responseObj.data;
+    console.log(responseObj.data);
   })
   .catch(err => {});

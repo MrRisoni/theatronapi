@@ -21,10 +21,7 @@ public class PerformancesResult {
     private String authorName;
 
     public PerformancesResult() {
-
-
     }
-
 
     public String getAuthorName() {
         return authorName;
@@ -106,7 +103,6 @@ public class PerformancesResult {
         this.playName = playName;
     }
 
-
     public double getAvgCapacity() {
         return avgCapacity;
     }
@@ -114,7 +110,6 @@ public class PerformancesResult {
     public void setAvgCapacity(double avgCapacity) {
         this.avgCapacity = avgCapacity;
     }
-
 
     public Double getMinPrice() {
         return minPrice;
@@ -132,7 +127,6 @@ public class PerformancesResult {
         this.maxPrice = maxPrice;
     }
 
-
     public int getTotalSeats() {
         return totalSeats;
     }
@@ -140,7 +134,6 @@ public class PerformancesResult {
     public void setTotalSeats(int totalSeats) {
         this.totalSeats = totalSeats;
     }
-
 
 
 }

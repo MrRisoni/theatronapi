@@ -11,6 +11,7 @@ import repos.SprCardDetailsRepository;
 import repos.SprOrderItemRepository;
 import repos.SprOrderRepository;
 import java.text.SimpleDateFormat;
+import java.util.concurrent.ThreadLocalRandom;
 
 
 @CrossOrigin
@@ -30,7 +31,7 @@ public class BookController {
             consumes = {MediaType.APPLICATION_JSON_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE}
     )
-    public String bookSeats(@RequestBody Object postData) {
+    public BookCtrlResponse bookSeats(@RequestBody Object postData) {
 
         try {
             Gson g = new Gson();
@@ -72,7 +73,6 @@ public class BookController {
             orderRepo.save(ord);
             System.out.println(ord.getId());
 
-
             OrderItemModel ordItm = new OrderItemModel();
             ordItm.setSeatNo(testObj.getPeople()[0].getSeat());
             ordItm.setOrderId(ord.getId());
@@ -83,7 +83,6 @@ public class BookController {
             typ.setId(1);
             ordItm.setTyp(typ);
             orderItemRepo.save(ordItm);
-
 
             CardDetailsModel card = new CardDetailsModel();
             card.setCardType(testObj.getCardData().getType());
@@ -97,55 +96,34 @@ public class BookController {
             PDFGenerator pdfgen = new PDFGenerator(testObj);
             pdfgen.makeAllTicketsPdf();
 
-            return "foo";
+            BookCtrlResponse bookRsp = new BookCtrlResponse();
+            bookRsp.setErr(false);
+            bookRsp.setOrderId(ord.getId());
+            bookRsp.setTransactionId(this.randomString(15,false));
+            bookRsp.getTicketItems().add(ordItm);
+
+            return bookRsp;
+
         } catch (Exception ex) {
-            return "err on params + " + ex.getMessage();
+            System.out.println(ex.getMessage());
+            return null;
         }
+    }
+
+    private String randomString(int len,boolean numbersOnly)
+    {
+        String alphabet= "0123456789";
+        if (numbersOnly == false) {
+            alphabet +="abcdefghijklmnopqrstuvwxyz";
+        }
+        String ran = "";
+        int min = 0;
+        int max = alphabet.length();
+        for (int i=0;i<len;i++) {
+            int randomNum = ThreadLocalRandom.current().nextInt(min, max + 1);
+            System.out.println("random " + randomNum);
+            ran += alphabet.substring(randomNum,randomNum+1);
+        }
+        return  ran.toUpperCase();
     }
 }
-           /* HttpRequests req = new HttpRequests("http://localhost:3000/api/banks/ok");
-            Payment pay = new Payment(req);
-
-
-       /* pay.setPayload(pl);
-
-        PaymentResponse payRsp = pay.settle();
-        System.out.println(payRsp.getBankRsp().getTransactionId());
-
-
-        BookCtrlResponse bookCtrlResponse = new BookCtrlResponse();
-        bookCtrlResponse.transactionId = payRsp.getBankRsp().getTransactionId();
-
-        Gson g = new Gson();
-        return g.toJson(bookCtrlResponse); */
-
-
-// generate docs
-          /*  System.out.println("start docs ");
-
-            PDFGenerator pdfgen = new PDFGenerator(testObj);
-            pdfgen.makeAllTicketsPdf();
-
-            System.out.println("invoice ");
-
-      }
-
-
-
-
-
-
-System.out.println("Finished");
-
-            return "lol";
-        }
-        catch (Exception ex)
-        {
-            return "err on params + " + ex.getMessage();
-        }
-    }
-
-
-
-
-}*/

@@ -1,16 +1,21 @@
 package hello;
 
+import models.OrderItemModel;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class BookCtrlResponse {
 
-
-    public int orderId;
-    public String transactionId;
-    public boolean err;
+    private int orderId;
+    private String transactionId;
+    private boolean err;
+    private List<OrderItemModel> ticketItems;
 
     public BookCtrlResponse(){
         this.err = false;
+        this.ticketItems = new ArrayList<>();
     }
-
 
     public boolean isErr() {
         return err;
@@ -34,5 +39,13 @@ public class BookCtrlResponse {
 
     public void setTransactionId(String transactionId) {
         this.transactionId = transactionId;
+    }
+
+    public List<OrderItemModel> getTicketItems() {
+        return ticketItems;
+    }
+
+    public void setTicketItems(List<OrderItemModel> ticketItems) {
+        this.ticketItems = ticketItems;
     }
 }

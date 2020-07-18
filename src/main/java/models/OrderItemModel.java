@@ -13,7 +13,7 @@ public class OrderItemModel {
     @Column(name = "itm_order_id")
     private int orderId;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn (name="itm_type_id")
     private TypeModel typ;
 

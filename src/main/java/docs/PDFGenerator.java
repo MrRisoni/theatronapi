@@ -1,6 +1,6 @@
 package docs;
 
-import hello.bookPojos.BookPayload;
+import core.bookPojos.BookPayload;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;

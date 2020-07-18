@@ -16,11 +16,11 @@ public class PerformanceModel {
     @Temporal(TemporalType.TIMESTAMP)
     private Date starts_at;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn (name="per_play_id")
     private PlayModel play;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn (name="per_director_id")
     private PeopleModel director;
 

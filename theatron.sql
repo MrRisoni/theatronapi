@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.4
+-- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Jan 23, 2019 at 11:13 AM
--- Server version: 10.1.28-MariaDB
--- PHP Version: 7.2.7
+-- Host: localhost
+-- Generation Time: Jul 18, 2020 at 02:18 PM
+-- Server version: 8.0.21
+-- PHP Version: 7.4.7
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -29,10 +28,10 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `actors` (
-  `act_id` int(10) UNSIGNED NOT NULL,
-  `act_character_id` int(10) UNSIGNED NOT NULL,
-  `act_performance_id` bigint(20) UNSIGNED NOT NULL,
-  `act_people_id` int(10) UNSIGNED NOT NULL
+  `act_id` int UNSIGNED NOT NULL,
+  `act_character_id` int UNSIGNED NOT NULL,
+  `act_performance_id` bigint UNSIGNED NOT NULL,
+  `act_people_id` int UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -54,7 +53,7 @@ INSERT INTO `actors` (`act_id`, `act_character_id`, `act_performance_id`, `act_p
 --
 
 CREATE TABLE `authors` (
-  `aut_id` mediumint(8) UNSIGNED NOT NULL,
+  `aut_id` mediumint UNSIGNED NOT NULL,
   `aut_name` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -66,7 +65,8 @@ INSERT INTO `authors` (`aut_id`, `aut_name`) VALUES
 (1, 'Henrik Ibsen'),
 (2, 'Anton Checkov'),
 (3, 'Lev Tolstoy'),
-(4, 'Arthur Miller');
+(4, 'August Strindberg'),
+(5, 'William Shakespeare');
 
 -- --------------------------------------------------------
 
@@ -75,13 +75,39 @@ INSERT INTO `authors` (`aut_id`, `aut_name`) VALUES
 --
 
 CREATE TABLE `card_details` (
-  `crd_id` int(10) UNSIGNED NOT NULL,
-  `crd_order_id` int(10) UNSIGNED NOT NULL,
+  `crd_id` int UNSIGNED NOT NULL,
+  `crd_order_id` int UNSIGNED NOT NULL,
   `crd_card_type` varchar(4) NOT NULL,
   `crd_card_holder` varchar(55) NOT NULL,
   `crd_bin` varchar(6) NOT NULL,
   `crd_last` varchar(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `card_details`
+--
+
+INSERT INTO `card_details` (`crd_id`, `crd_order_id`, `crd_card_type`, `crd_card_holder`, `crd_bin`, `crd_last`) VALUES
+(1, 11, 'VIDE', 'ARTHUR MILLER', '411111', '1111'),
+(2, 12, 'VIDE', 'ARTHUR MILLER', '411111', '1111'),
+(3, 13, 'VIDE', 'ARTHUR MILLER', '411111', '1111'),
+(4, 14, 'VIDE', 'ARTHUR MILLER', '411111', '1111'),
+(5, 15, 'VIDE', 'ARTHUR MILLER', '411111', '1111'),
+(6, 16, 'VIDE', 'ARTHUR MILLER', '411111', '1111'),
+(7, 17, 'VIDE', 'ARTHUR MILLER', '411111', '1111'),
+(8, 18, 'VIDE', 'ARTHUR MILLER', '411111', '1111'),
+(9, 19, 'VIDE', 'ARTHUR MILLER', '411111', '1111'),
+(10, 20, 'VIDE', 'ARTHUR MILLER', '411111', '1111'),
+(11, 21, 'VIDE', 'ARTHUR MILLER', '411111', '1111'),
+(12, 22, 'VIDE', 'ARTHUR MILLER', '411111', '1111'),
+(13, 23, 'VIDE', 'ARTHUR MILLER', '411111', '1111'),
+(14, 24, 'VIDE', 'ARTHUR MILLER', '411111', '1111'),
+(15, 25, 'VIDE', 'ARTHUR MILLER', '411111', '1111'),
+(16, 26, 'VIDE', 'ARTHUR MILLER', '411111', '1111'),
+(17, 27, 'VIDE', 'ARTHUR MILLER', '411111', '1111'),
+(18, 28, 'VIDE', 'ARTHUR MILLER', '411111', '1111'),
+(19, 29, 'VIDE', 'ARTHUR MILLER', '411111', '1111'),
+(20, 30, 'VIDE', 'ARTHUR MILLER', '411111', '1111');
 
 -- --------------------------------------------------------
 
@@ -90,8 +116,8 @@ CREATE TABLE `card_details` (
 --
 
 CREATE TABLE `characters` (
-  `char_id` int(10) UNSIGNED NOT NULL,
-  `char_play_id` mediumint(8) UNSIGNED NOT NULL,
+  `char_id` int UNSIGNED NOT NULL,
+  `char_play_id` mediumint UNSIGNED NOT NULL,
   `char_name` varchar(40) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -100,12 +126,12 @@ CREATE TABLE `characters` (
 --
 
 INSERT INTO `characters` (`char_id`, `char_play_id`, `char_name`) VALUES
-(2, 2, 'Astrov'),
-(1, 2, 'Uncle Vanya'),
-(8, 5, 'Esther Franz'),
-(10, 5, 'Gregory Solomon'),
-(7, 5, 'Victor Franz'),
-(9, 5, 'Walter Franz');
+(1, 2, 'Cordelia'),
+(8, 2, 'Gonerill'),
+(2, 2, 'King Lear'),
+(7, 2, 'Lord Kent'),
+(9, 2, 'Oswald'),
+(10, 2, 'Regan');
 
 -- --------------------------------------------------------
 
@@ -114,7 +140,7 @@ INSERT INTO `characters` (`char_id`, `char_play_id`, `char_name`) VALUES
 --
 
 CREATE TABLE `genres` (
-  `gen_id` tinyint(3) UNSIGNED NOT NULL,
+  `gen_id` tinyint UNSIGNED NOT NULL,
   `gen_title` varchar(40) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -134,20 +160,20 @@ INSERT INTO `genres` (`gen_id`, `gen_title`) VALUES
 --
 
 CREATE TABLE `orders` (
-  `ord_id` int(10) UNSIGNED NOT NULL,
-  `ord_performance_id` bigint(20) UNSIGNED NOT NULL,
-  `ord_season_id` tinyint(3) UNSIGNED NOT NULL DEFAULT '1',
+  `ord_id` int UNSIGNED NOT NULL,
+  `ord_performance_id` bigint UNSIGNED NOT NULL,
+  `ord_season_id` tinyint UNSIGNED NOT NULL DEFAULT '1',
   `ord_date` date NOT NULL,
-  `ord_perf_date_id` int(10) UNSIGNED NOT NULL DEFAULT '1',
+  `ord_perf_date_id` int UNSIGNED NOT NULL DEFAULT '1',
   `ord_name` varchar(50) NOT NULL,
   `ord_surname` varchar(60) NOT NULL,
   `ord_mobile` varchar(15) NOT NULL,
   `ord_email` varchar(50) NOT NULL,
-  `ord_ccfees` decimal(4,2) UNSIGNED NOT NULL,
-  `ord_tickets` decimal(4,2) UNSIGNED NOT NULL,
-  `ord_total` decimal(4,2) UNSIGNED NOT NULL,
-  `ord_void` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
-  `ord_success` tinyint(3) UNSIGNED NOT NULL,
+  `ord_ccfees` decimal(8,2) UNSIGNED NOT NULL,
+  `ord_tickets` decimal(8,2) UNSIGNED NOT NULL,
+  `ord_total` decimal(8,2) UNSIGNED NOT NULL,
+  `ord_void` tinyint UNSIGNED NOT NULL DEFAULT '0',
+  `ord_success` tinyint UNSIGNED NOT NULL,
   `ord_created_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -156,8 +182,36 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`ord_id`, `ord_performance_id`, `ord_season_id`, `ord_date`, `ord_perf_date_id`, `ord_name`, `ord_surname`, `ord_mobile`, `ord_email`, `ord_ccfees`, `ord_tickets`, `ord_total`, `ord_void`, `ord_success`, `ord_created_at`) VALUES
-(1, 1, 1, '2019-01-07', 3, '', '', '', '', '0.00', '0.00', '0.00', 0, 1, '0000-00-00 00:00:00'),
-(2, 1, 1, '2019-01-07', 3, '', '', '', '', '0.00', '0.00', '0.00', 0, 0, '0000-00-00 00:00:00');
+(1, 1, 1, '2019-01-07', 3, '', '', '', '', '0.00', '0.00', '0.00', 0, 1, '2020-07-01 10:17:58'),
+(2, 1, 1, '2019-01-07', 3, '', '', '', '', '0.00', '0.00', '0.00', 0, 0, '2020-07-01 10:17:58'),
+(3, 1, 1, '2019-01-24', 1, 'ANTON', 'CHEKOV', '1234567890', 'test@test.gr', '2.25', '104.00', '56.00', 0, 1, '2020-07-18 07:20:00'),
+(4, 1, 1, '2019-01-24', 1, 'ANTON', 'CHEKOV', '1234567890', 'test@test.gr', '2.25', '104.00', '56.00', 0, 1, '2020-07-18 07:24:41'),
+(5, 1, 1, '2019-01-24', 1, 'ANTON', 'CHEKOV', '1234567890', 'test@test.gr', '2.25', '104.00', '56.00', 0, 1, '2020-07-18 07:26:08'),
+(6, 1, 1, '2019-01-24', 1, 'ANTON', 'CHEKOV', '1234567890', 'test@test.gr', '2.25', '104.00', '56.00', 0, 1, '2020-07-18 07:26:59'),
+(7, 1, 1, '2019-01-24', 1, 'ANTON', 'CHEKOV', '1234567890', 'test@test.gr', '2.25', '104.00', '56.00', 0, 1, '2020-07-18 07:32:29'),
+(8, 1, 1, '2019-01-24', 1, 'ANTON', 'CHEKOV', '1234567890', 'test@test.gr', '2.25', '104.00', '56.00', 0, 1, '2020-07-18 07:33:52'),
+(9, 1, 1, '2019-01-24', 1, 'ANTON', 'CHEKOV', '1234567890', 'test@test.gr', '2.25', '104.00', '56.00', 0, 1, '2020-07-18 07:36:15'),
+(10, 1, 1, '2019-01-24', 1, 'ANTON', 'CHEKOV', '1234567890', 'test@test.gr', '2.25', '104.00', '56.00', 0, 1, '2020-07-18 07:37:01'),
+(11, 1, 1, '2019-01-24', 1, 'ANTON', 'CHEKOV', '1234567890', 'test@test.gr', '2.25', '104.00', '56.00', 0, 1, '2020-07-18 07:37:45'),
+(12, 1, 1, '2019-01-24', 1, 'ANTON', 'CHEKOV', '1234567890', 'test@test.gr', '2.25', '104.00', '56.00', 0, 1, '2020-07-18 07:40:55'),
+(13, 1, 1, '2019-01-24', 1, 'ANTON', 'CHEKOV', '1234567890', 'test@test.gr', '2.25', '104.00', '56.00', 0, 1, '2020-07-18 07:42:37'),
+(14, 1, 1, '2019-01-24', 1, 'ANTON', 'CHEKOV', '1234567890', 'test@test.gr', '2.25', '104.00', '56.00', 0, 1, '2020-07-18 07:44:31'),
+(15, 1, 1, '2019-01-24', 1, 'ANTON', 'CHEKOV', '1234567890', 'test@test.gr', '2.25', '104.00', '56.00', 0, 1, '2020-07-18 07:47:33'),
+(16, 1, 1, '2019-01-24', 1, 'ANTON', 'CHEKOV', '1234567890', 'test@test.gr', '2.25', '104.00', '56.00', 0, 1, '2020-07-18 07:50:00'),
+(17, 1, 1, '2019-01-24', 1, 'ANTON', 'CHEKOV', '1234567890', 'test@test.gr', '2.25', '104.00', '56.00', 0, 1, '2020-07-18 09:34:44'),
+(18, 1, 1, '2019-01-24', 1, 'ANTON', 'CHEKOV', '1234567890', 'test@test.gr', '2.25', '104.00', '56.00', 0, 1, '2020-07-18 09:34:55'),
+(19, 1, 1, '2019-01-24', 1, 'ANTON', 'CHEKOV', '1234567890', 'test@test.gr', '2.25', '104.00', '56.00', 0, 1, '2020-07-18 09:47:17'),
+(20, 1, 1, '2019-01-24', 1, 'ANTON', 'CHEKOV', '1234567890', 'test@test.gr', '2.25', '104.00', '56.00', 0, 1, '2020-07-18 09:49:29'),
+(21, 1, 1, '2019-01-24', 1, 'ANTON', 'CHEKOV', '1234567890', 'test@test.gr', '2.25', '104.00', '56.00', 0, 1, '2020-07-18 09:49:59'),
+(22, 1, 1, '2019-01-24', 1, 'ANTON', 'CHEKOV', '1234567890', 'test@test.gr', '2.25', '104.00', '56.00', 0, 1, '2020-07-18 09:51:05'),
+(23, 1, 1, '2019-01-24', 1, 'ANTON', 'CHEKOV', '1234567890', 'test@test.gr', '2.25', '104.00', '56.00', 0, 1, '2020-07-18 09:55:07'),
+(24, 1, 1, '2019-01-24', 1, 'ANTON', 'CHEKOV', '1234567890', 'test@test.gr', '2.25', '104.00', '56.00', 0, 1, '2020-07-18 09:59:23'),
+(25, 1, 1, '2019-01-24', 1, 'ANTON', 'CHEKOV', '1234567890', 'test@test.gr', '2.25', '104.00', '56.00', 0, 1, '2020-07-18 13:25:39'),
+(26, 1, 1, '2019-01-24', 1, 'ANTON', 'CHEKOV', '1234567890', 'test@test.gr', '2.25', '104.00', '56.00', 0, 1, '2020-07-18 13:46:23'),
+(27, 1, 1, '2019-01-24', 1, 'ANTON', 'CHEKOV', '1234567890', 'test@test.gr', '2.25', '104.00', '56.00', 0, 1, '2020-07-18 13:47:00'),
+(28, 1, 1, '2019-01-24', 1, 'ANTON', 'CHEKOV', '1234567890', 'test@test.gr', '2.25', '104.00', '56.00', 0, 1, '2020-07-18 13:47:58'),
+(29, 1, 1, '2019-01-24', 1, 'ANTON', 'CHEKOV', '1234567890', 'test@test.gr', '2.25', '104.00', '56.00', 0, 1, '2020-07-18 13:49:05'),
+(30, 1, 1, '2019-01-24', 1, 'ANTON', 'CHEKOV', '1234567890', 'test@test.gr', '2.25', '104.00', '56.00', 0, 1, '2020-07-18 13:49:51');
 
 -- --------------------------------------------------------
 
@@ -166,13 +220,13 @@ INSERT INTO `orders` (`ord_id`, `ord_performance_id`, `ord_season_id`, `ord_date
 --
 
 CREATE TABLE `order_item` (
-  `itm_id` int(10) UNSIGNED NOT NULL,
-  `itm_order_id` int(10) UNSIGNED NOT NULL,
-  `itm_type_id` tinyint(3) UNSIGNED NOT NULL,
+  `itm_id` int UNSIGNED NOT NULL,
+  `itm_order_id` int UNSIGNED NOT NULL,
+  `itm_type_id` tinyint UNSIGNED NOT NULL,
   `itm_seatno` varchar(12) NOT NULL,
   `itm_ticket` varchar(10) NOT NULL,
-  `itm_price` decimal(4,2) UNSIGNED NOT NULL,
-  `itm_void` tinyint(4) NOT NULL DEFAULT '0'
+  `itm_price` decimal(8,2) UNSIGNED NOT NULL,
+  `itm_void` tinyint NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -188,7 +242,31 @@ INSERT INTO `order_item` (`itm_id`, `itm_order_id`, `itm_type_id`, `itm_seatno`,
 (6, 1, 1, 'BALCB_R3_C34', '', '0.00', 0),
 (7, 1, 1, 'BALCB_R3_C38', '', '0.00', 0),
 (8, 1, 1, 'BALCB_R2_C32', '', '0.00', 0),
-(9, 2, 1, 'bababa', '', '0.00', 0);
+(9, 2, 1, 'bababa', '', '0.00', 0),
+(10, 7, 1, 'AVC', '123340002', '10.20', 1),
+(11, 8, 1, 'AVC', '123340002', '10.20', 1),
+(12, 9, 1, 'AVC', '123340002', '10.20', 1),
+(13, 10, 1, 'AVC', '123340002', '10.20', 1),
+(14, 11, 1, 'AVC', '123340002', '10.20', 1),
+(15, 12, 1, 'AVC', '123340002', '10.20', 1),
+(16, 13, 1, 'AVC', '123340002', '10.20', 1),
+(17, 14, 1, 'AVC', '123340002', '10.20', 1),
+(18, 15, 1, 'AVC', '123340002', '10.20', 1),
+(19, 16, 1, 'AVC', '123340002', '10.20', 1),
+(20, 17, 1, 'AVC', '123340002', '10.20', 1),
+(21, 18, 1, 'AVC', '123340002', '10.20', 1),
+(22, 19, 1, 'AVC', '123340002', '10.20', 1),
+(23, 20, 1, 'AVC', '123340002', '10.20', 1),
+(24, 21, 1, 'AVC', '123340002', '10.20', 1),
+(25, 22, 1, 'AVC', '123340002', '10.20', 1),
+(26, 23, 1, 'AVC', '123340002', '10.20', 1),
+(27, 24, 1, 'AVC', '123340002', '10.20', 1),
+(28, 25, 1, 'AVC', '123340002', '10.20', 1),
+(29, 26, 1, 'AVC', '123340002', '10.20', 1),
+(30, 27, 1, 'AVC', '123340002', '10.20', 1),
+(31, 28, 1, 'AVC', '123340002', '10.20', 1),
+(32, 29, 1, 'AVC', '123340002', '10.20', 1),
+(33, 30, 1, 'AVC', '123340002', '10.20', 1);
 
 -- --------------------------------------------------------
 
@@ -197,7 +275,7 @@ INSERT INTO `order_item` (`itm_id`, `itm_order_id`, `itm_type_id`, `itm_seatno`,
 --
 
 CREATE TABLE `people` (
-  `ppl_id` int(10) UNSIGNED NOT NULL,
+  `ppl_id` int UNSIGNED NOT NULL,
   `ppl_fullname` varchar(66) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -220,12 +298,12 @@ INSERT INTO `people` (`ppl_id`, `ppl_fullname`) VALUES
 --
 
 CREATE TABLE `performance` (
-  `per_id` bigint(20) UNSIGNED NOT NULL,
-  `per_play_id` mediumint(8) UNSIGNED NOT NULL,
-  `per_season_id` tinyint(3) UNSIGNED NOT NULL DEFAULT '1',
-  `per_theater_id` int(10) UNSIGNED NOT NULL,
-  `per_director_id` int(10) UNSIGNED NOT NULL,
-  `per_duration` smallint(5) UNSIGNED NOT NULL,
+  `per_id` bigint UNSIGNED NOT NULL,
+  `per_play_id` mediumint UNSIGNED NOT NULL,
+  `per_season_id` tinyint UNSIGNED NOT NULL DEFAULT '1',
+  `per_theater_id` int UNSIGNED NOT NULL,
+  `per_director_id` int UNSIGNED NOT NULL,
+  `per_duration` smallint UNSIGNED NOT NULL,
   `per_from_date` date NOT NULL,
   `per_to_date` date NOT NULL,
   `per_created_at` datetime NOT NULL
@@ -237,7 +315,7 @@ CREATE TABLE `performance` (
 
 INSERT INTO `performance` (`per_id`, `per_play_id`, `per_season_id`, `per_theater_id`, `per_director_id`, `per_duration`, `per_from_date`, `per_to_date`, `per_created_at`) VALUES
 (1, 2, 1, 1, 1, 120, '2018-12-01', '2019-03-06', '2019-01-06 00:00:00'),
-(2, 5, 2, 2, 3, 120, '2019-01-10', '2019-06-20', '2019-01-18 13:19:15');
+(2, 5, 2, 2, 3, 120, '2017-11-01', '2017-03-20', '2019-01-18 13:19:15');
 
 -- --------------------------------------------------------
 
@@ -246,9 +324,9 @@ INSERT INTO `performance` (`per_id`, `per_play_id`, `per_season_id`, `per_theate
 --
 
 CREATE TABLE `performance_dates` (
-  `prd_id` int(10) UNSIGNED NOT NULL,
-  `prd_performance_id` bigint(20) UNSIGNED NOT NULL,
-  `prd_season_id` tinyint(3) UNSIGNED NOT NULL DEFAULT '1',
+  `prd_id` int UNSIGNED NOT NULL,
+  `prd_performance_id` bigint UNSIGNED NOT NULL,
+  `prd_season_id` tinyint UNSIGNED NOT NULL DEFAULT '1',
   `prd_date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -274,10 +352,10 @@ INSERT INTO `performance_dates` (`prd_id`, `prd_performance_id`, `prd_season_id`
 --
 
 CREATE TABLE `plays` (
-  `ply_id` mediumint(8) UNSIGNED NOT NULL,
+  `ply_id` mediumint UNSIGNED NOT NULL,
   `ply_title` varchar(40) NOT NULL,
-  `ply_author_id` mediumint(8) UNSIGNED NOT NULL,
-  `ply_genre_id` tinyint(3) UNSIGNED NOT NULL DEFAULT '1'
+  `ply_author_id` mediumint UNSIGNED NOT NULL,
+  `ply_genre_id` tinyint UNSIGNED NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -286,10 +364,10 @@ CREATE TABLE `plays` (
 
 INSERT INTO `plays` (`ply_id`, `ply_title`, `ply_author_id`, `ply_genre_id`) VALUES
 (1, 'WIlduck', 1, 1),
-(2, 'Uncle Vanya', 2, 1),
+(2, 'King Lear', 5, 1),
 (3, 'Master and Man', 3, 1),
 (4, 'An Enemy of the People', 1, 1),
-(5, 'The Price', 4, 1);
+(5, 'Dreamplay', 4, 1);
 
 -- --------------------------------------------------------
 
@@ -298,11 +376,11 @@ INSERT INTO `plays` (`ply_id`, `ply_title`, `ply_author_id`, `ply_genre_id`) VAL
 --
 
 CREATE TABLE `pricing` (
-  `pri_id` int(10) UNSIGNED NOT NULL,
-  `pri_performance_id` bigint(20) UNSIGNED NOT NULL,
-  `pri_seasonid` tinyint(3) UNSIGNED NOT NULL DEFAULT '1',
-  `pri_zone_id` smallint(5) UNSIGNED NOT NULL,
-  `pri_type_id` tinyint(3) UNSIGNED NOT NULL,
+  `pri_id` int UNSIGNED NOT NULL,
+  `pri_performance_id` bigint UNSIGNED NOT NULL,
+  `pri_seasonid` tinyint UNSIGNED NOT NULL DEFAULT '1',
+  `pri_zone_id` smallint UNSIGNED NOT NULL,
+  `pri_type_id` tinyint UNSIGNED NOT NULL,
   `pri_price` decimal(4,2) UNSIGNED NOT NULL DEFAULT '45.00'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -349,13 +427,13 @@ INSERT INTO `pricing` (`pri_id`, `pri_performance_id`, `pri_seasonid`, `pri_zone
 --
 
 CREATE TABLE `seatfloor` (
-  `scr_id` int(11) NOT NULL,
-  `scr_top` smallint(6) NOT NULL,
-  `scr_left` smallint(6) NOT NULL,
-  `scr_zone_id` smallint(5) UNSIGNED NOT NULL,
-  `scr_rowid` tinyint(3) UNSIGNED NOT NULL,
-  `scr_colid` tinyint(3) UNSIGNED NOT NULL,
-  `scr_theater_id` int(10) UNSIGNED NOT NULL,
+  `scr_id` int NOT NULL,
+  `scr_top` smallint NOT NULL,
+  `scr_left` smallint NOT NULL,
+  `scr_zone_id` smallint UNSIGNED NOT NULL,
+  `scr_rowid` tinyint UNSIGNED NOT NULL,
+  `scr_colid` tinyint UNSIGNED NOT NULL,
+  `scr_theater_id` int UNSIGNED NOT NULL DEFAULT '1',
   `scr_seatname` varchar(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -1279,7 +1357,274 @@ INSERT INTO `seatfloor` (`scr_id`, `scr_top`, `scr_left`, `scr_zone_id`, `scr_ro
 (13859, 420, 635, 1, 14, 14, 2, 'RTSR14C14'),
 (13860, 420, 650, 1, 14, 15, 2, 'RTSR14C15'),
 (13861, 420, 665, 1, 14, 16, 2, 'RTSR14C16'),
-(13862, 420, 680, 1, 14, 17, 2, 'RTSR14C17');
+(13862, 420, 680, 1, 14, 17, 2, 'RTSR14C17'),
+(13863, 635, 170, 3, 0, 0, 1, 'VIP_BOX_R646_145'),
+(13865, 620, 170, 3, 0, 0, 1, 'CP_620170'),
+(13866, 600, 180, 3, 0, 0, 1, 'CP_600180'),
+(13867, 585, 180, 3, 0, 0, 1, 'CP_585180'),
+(13868, 565, 190, 3, 0, 0, 1, 'CP_565190'),
+(13869, 550, 190, 3, 0, 0, 1, 'CP_550190'),
+(13870, 530, 200, 3, 0, 0, 1, 'CP_530200'),
+(13871, 515, 200, 3, 0, 0, 1, 'CP_515200'),
+(13872, 495, 210, 3, 0, 0, 1, 'CP_495210'),
+(13873, 480, 210, 3, 0, 0, 1, 'CP_480210'),
+(13874, 460, 220, 3, 0, 0, 1, 'CP_460220'),
+(13875, 445, 220, 3, 0, 0, 1, 'CP_445220'),
+(13876, 425, 230, 3, 0, 0, 1, 'CP_425230'),
+(13877, 410, 230, 3, 0, 0, 1, 'CP_410230'),
+(13878, 390, 240, 3, 0, 0, 1, 'CP_390240'),
+(13879, 375, 240, 3, 0, 0, 1, 'CP_375240'),
+(13880, 355, 250, 3, 0, 0, 1, 'CP_355250'),
+(13881, 340, 250, 3, 0, 0, 1, 'CP_340250'),
+(13882, 635, 130, 4, 0, 0, 1, 'CP_635130'),
+(13883, 620, 130, 4, 0, 0, 1, 'CP_620130'),
+(13884, 600, 140, 4, 0, 0, 1, 'CP_600140'),
+(13885, 585, 140, 4, 0, 0, 1, 'CP_585140'),
+(13886, 565, 150, 4, 0, 0, 1, 'CP_565150'),
+(13887, 550, 150, 4, 0, 0, 1, 'CP_550150'),
+(13888, 530, 160, 4, 0, 0, 1, 'CP_530160'),
+(13889, 515, 160, 4, 0, 0, 1, 'CP_515160'),
+(13890, 495, 170, 4, 0, 0, 1, 'CP_495170'),
+(13891, 480, 170, 4, 0, 0, 1, 'CP_480170'),
+(13892, 460, 180, 4, 0, 0, 1, 'CP_460180'),
+(13893, 445, 180, 4, 0, 0, 1, 'CP_445180'),
+(13894, 425, 190, 4, 0, 0, 1, 'CP_425190'),
+(13895, 410, 190, 4, 0, 0, 1, 'CP_410190'),
+(13896, 390, 200, 4, 0, 0, 1, 'CP_390200'),
+(13897, 375, 200, 4, 0, 0, 1, 'CP_375200'),
+(13898, 355, 210, 4, 0, 0, 1, 'CP_355210'),
+(13899, 340, 210, 4, 0, 0, 1, 'CP_340210'),
+(14503, 635, 795, 3, 0, 0, 1, 'ZONECP_635795'),
+(14504, 620, 795, 3, 0, 0, 1, 'ZONECP_620795'),
+(14505, 600, 785, 3, 0, 0, 1, 'ZONECP_600785'),
+(14506, 585, 785, 3, 0, 0, 1, 'ZONECP_585785'),
+(14507, 565, 775, 3, 0, 0, 1, 'ZONECP_565775'),
+(14508, 550, 775, 3, 0, 0, 1, 'ZONECP_550775'),
+(14509, 530, 765, 3, 0, 0, 1, 'ZONECP_530765'),
+(14510, 515, 765, 3, 0, 0, 1, 'ZONECP_515765'),
+(14511, 495, 755, 3, 0, 0, 1, 'ZONECP_495755'),
+(14512, 480, 755, 3, 0, 0, 1, 'ZONECP_480755'),
+(14513, 460, 745, 3, 0, 0, 1, 'ZONECP_460745'),
+(14514, 445, 745, 3, 0, 0, 1, 'ZONECP_445745'),
+(14515, 425, 735, 3, 0, 0, 1, 'ZONECP_425735'),
+(14516, 410, 735, 3, 0, 0, 1, 'ZONECP_410735'),
+(14517, 390, 725, 3, 0, 0, 1, 'ZONECP_390725'),
+(14518, 375, 725, 3, 0, 0, 1, 'ZONECP_375725'),
+(14519, 355, 715, 3, 0, 0, 1, 'ZONECP_355715'),
+(14520, 340, 715, 3, 0, 0, 1, 'ZONECP_340715'),
+(14521, 635, 780, 3, 0, 0, 1, 'ZONECP_635780'),
+(14522, 620, 780, 3, 0, 0, 1, 'ZONECP_620780'),
+(14523, 600, 770, 3, 0, 0, 1, 'ZONECP_600770'),
+(14524, 585, 770, 3, 0, 0, 1, 'ZONECP_585770'),
+(14525, 565, 760, 3, 0, 0, 1, 'ZONECP_565760'),
+(14526, 550, 760, 3, 0, 0, 1, 'ZONECP_550760'),
+(14527, 530, 750, 3, 0, 0, 1, 'ZONECP_530750'),
+(14528, 515, 750, 3, 0, 0, 1, 'ZONECP_515750'),
+(14529, 495, 740, 3, 0, 0, 1, 'ZONECP_495740'),
+(14530, 480, 740, 3, 0, 0, 1, 'ZONECP_480740'),
+(14531, 460, 730, 3, 0, 0, 1, 'ZONECP_460730'),
+(14532, 445, 730, 3, 0, 0, 1, 'ZONECP_445730'),
+(14533, 425, 720, 3, 0, 0, 1, 'ZONECP_425720'),
+(14534, 410, 720, 3, 0, 0, 1, 'ZONECP_410720'),
+(14535, 390, 710, 3, 0, 0, 1, 'ZONECP_390710'),
+(14536, 375, 710, 3, 0, 0, 1, 'ZONECP_375710'),
+(14537, 355, 700, 3, 0, 0, 1, 'ZONECP_355700'),
+(14538, 340, 700, 3, 0, 0, 1, 'ZONECP_340700'),
+(14575, 635, 835, 4, 0, 0, 1, 'ZONECP_635835'),
+(14576, 620, 835, 4, 0, 0, 1, 'ZONECP_620835'),
+(14577, 600, 825, 4, 0, 0, 1, 'ZONECP_600825'),
+(14578, 585, 825, 4, 0, 0, 1, 'ZONECP_585825'),
+(14579, 565, 815, 4, 0, 0, 1, 'ZONECP_565815'),
+(14580, 550, 815, 4, 0, 0, 1, 'ZONECP_550815'),
+(14581, 530, 805, 4, 0, 0, 1, 'ZONECP_530805'),
+(14582, 515, 805, 4, 0, 0, 1, 'ZONECP_515805'),
+(14583, 495, 795, 4, 0, 0, 1, 'ZONECP_495795'),
+(14584, 480, 795, 4, 0, 0, 1, 'ZONECP_480795'),
+(14585, 460, 785, 4, 0, 0, 1, 'ZONECP_460785'),
+(14586, 445, 785, 4, 0, 0, 1, 'ZONECP_445785'),
+(14587, 425, 775, 4, 0, 0, 1, 'ZONECP_425775'),
+(14588, 410, 775, 4, 0, 0, 1, 'ZONECP_410775'),
+(14589, 390, 765, 4, 0, 0, 1, 'ZONECP_390765'),
+(14590, 375, 765, 4, 0, 0, 1, 'ZONECP_375765'),
+(14591, 355, 755, 4, 0, 0, 1, 'ZONECP_355755'),
+(14592, 340, 755, 4, 0, 0, 1, 'ZONECP_340755'),
+(14593, 635, 820, 4, 0, 0, 1, 'ZONECP_635820'),
+(14594, 620, 820, 4, 0, 0, 1, 'ZONECP_620820'),
+(14595, 600, 810, 4, 0, 0, 1, 'ZONECP_600810'),
+(14596, 585, 810, 4, 0, 0, 1, 'ZONECP_585810'),
+(14597, 565, 800, 4, 0, 0, 1, 'ZONECP_565800'),
+(14598, 550, 800, 4, 0, 0, 1, 'ZONECP_550800'),
+(14599, 530, 790, 4, 0, 0, 1, 'ZONECP_530790'),
+(14600, 515, 790, 4, 0, 0, 1, 'ZONECP_515790'),
+(14601, 495, 780, 4, 0, 0, 1, 'ZONECP_495780'),
+(14602, 480, 780, 4, 0, 0, 1, 'ZONECP_480780'),
+(14603, 460, 770, 4, 0, 0, 1, 'ZONECP_460770'),
+(14604, 445, 770, 4, 0, 0, 1, 'ZONECP_445770'),
+(14605, 425, 760, 4, 0, 0, 1, 'ZONECP_425760'),
+(14606, 410, 760, 4, 0, 0, 1, 'ZONECP_410760'),
+(14607, 390, 750, 4, 0, 0, 1, 'ZONECP_390750'),
+(14608, 375, 750, 4, 0, 0, 1, 'ZONECP_375750'),
+(14609, 355, 740, 4, 0, 0, 1, 'ZONECP_355740'),
+(14610, 340, 740, 4, 0, 0, 1, 'ZONECP_340740'),
+(15589, 450, 100, 7, 0, 0, 1, 'BACL_SDL_R450C100'),
+(15590, 436, 106, 7, 0, 0, 1, 'BACL_SDL_R436C106'),
+(15591, 422, 112, 7, 0, 0, 1, 'BACL_SDL_R422C112'),
+(15592, 408, 118, 7, 0, 0, 1, 'BACL_SDL_R408C118'),
+(15593, 394, 124, 7, 0, 0, 1, 'BACL_SDL_R394C124'),
+(15594, 380, 130, 7, 0, 0, 1, 'BACL_SDL_R380C130'),
+(15595, 366, 136, 7, 0, 0, 1, 'BACL_SDL_R366C136'),
+(15596, 352, 142, 7, 0, 0, 1, 'BACL_SDL_R352C142'),
+(15597, 338, 148, 7, 0, 0, 1, 'BACL_SDL_R338C148'),
+(15598, 324, 154, 7, 0, 0, 1, 'BACL_SDL_R324C154'),
+(15599, 310, 160, 7, 0, 0, 1, 'BACL_SDL_R310C160'),
+(15600, 296, 166, 7, 0, 0, 1, 'BACL_SDL_R296C166'),
+(15601, 282, 172, 7, 0, 0, 1, 'BACL_SDL_R282C172'),
+(15602, 268, 178, 7, 0, 0, 1, 'BACL_SDL_R268C178'),
+(15603, 254, 184, 7, 0, 0, 1, 'BACL_SDL_R254C184'),
+(15604, 250, 200, 7, 0, 0, 1, 'BACL_SDL_R250C200'),
+(15605, 250, 214, 7, 0, 0, 1, 'BACL_SDL_R250C214'),
+(15606, 250, 228, 7, 0, 0, 1, 'BACL_SDL_R250C228'),
+(15607, 250, 242, 7, 0, 0, 1, 'BACL_SDL_R250C242'),
+(15608, 250, 256, 7, 0, 0, 1, 'BACL_SDL_R250C256'),
+(15609, 250, 270, 7, 0, 0, 1, 'BACL_SDL_R250C270'),
+(15610, 250, 284, 7, 0, 0, 1, 'BACL_SDL_R250C284'),
+(15611, 250, 298, 7, 0, 0, 1, 'BACL_SDL_R250C298'),
+(15612, 250, 312, 7, 0, 0, 1, 'BACL_SDL_R250C312'),
+(15613, 250, 326, 7, 0, 0, 1, 'BACL_SDL_R250C326'),
+(15614, 250, 340, 7, 0, 0, 1, 'BACL_SDL_R250C340'),
+(15615, 250, 354, 7, 0, 0, 1, 'BACL_SDL_R250C354'),
+(15616, 250, 368, 7, 0, 0, 1, 'BACL_SDL_R250C368'),
+(15617, 250, 382, 7, 0, 0, 1, 'BACL_SDL_R250C382'),
+(15618, 250, 396, 7, 0, 0, 1, 'BACL_SDL_R250C396'),
+(15619, 250, 410, 7, 0, 0, 1, 'BACL_SDL_R250C410'),
+(15620, 250, 424, 7, 0, 0, 1, 'BACL_SDL_R250C424'),
+(15621, 250, 438, 7, 0, 0, 1, 'BACL_SDL_R250C438'),
+(15622, 250, 452, 7, 0, 0, 1, 'BACL_SDL_R250C452'),
+(15623, 250, 466, 7, 0, 0, 1, 'BACL_SDL_R250C466'),
+(15624, 450, 850, 7, 0, 0, 1, 'BALCKZONECP_450850'),
+(15625, 436, 844, 7, 0, 0, 1, 'BALCKZONECP_436844'),
+(15626, 422, 838, 7, 0, 0, 1, 'BALCKZONECP_422838'),
+(15627, 408, 832, 7, 0, 0, 1, 'BALCKZONECP_408832'),
+(15628, 394, 826, 7, 0, 0, 1, 'BALCKZONECP_394826'),
+(15629, 380, 820, 7, 0, 0, 1, 'BALCKZONECP_380820'),
+(15630, 366, 814, 7, 0, 0, 1, 'BALCKZONECP_366814'),
+(15631, 352, 808, 7, 0, 0, 1, 'BALCKZONECP_352808'),
+(15632, 338, 802, 7, 0, 0, 1, 'BALCKZONECP_338802'),
+(15633, 324, 796, 7, 0, 0, 1, 'BALCKZONECP_324796'),
+(15634, 310, 790, 7, 0, 0, 1, 'BALCKZONECP_310790'),
+(15635, 296, 784, 7, 0, 0, 1, 'BALCKZONECP_296784'),
+(15636, 282, 778, 7, 0, 0, 1, 'BALCKZONECP_282778'),
+(15637, 268, 772, 7, 0, 0, 1, 'BALCKZONECP_268772'),
+(15638, 254, 766, 7, 0, 0, 1, 'BALCKZONECP_254766'),
+(15639, 250, 750, 7, 0, 0, 1, 'BALCKZONECP_250750'),
+(15640, 250, 736, 7, 0, 0, 1, 'BALCKZONECP_250736'),
+(15641, 250, 722, 7, 0, 0, 1, 'BALCKZONECP_250722'),
+(15642, 250, 708, 7, 0, 0, 1, 'BALCKZONECP_250708'),
+(15643, 250, 694, 7, 0, 0, 1, 'BALCKZONECP_250694'),
+(15644, 250, 680, 7, 0, 0, 1, 'BALCKZONECP_250680'),
+(15645, 250, 666, 7, 0, 0, 1, 'BALCKZONECP_250666'),
+(15646, 250, 652, 7, 0, 0, 1, 'BALCKZONECP_250652'),
+(15647, 250, 638, 7, 0, 0, 1, 'BALCKZONECP_250638'),
+(15648, 250, 624, 7, 0, 0, 1, 'BALCKZONECP_250624'),
+(15649, 250, 610, 7, 0, 0, 1, 'BALCKZONECP_250610'),
+(15650, 250, 596, 7, 0, 0, 1, 'BALCKZONECP_250596'),
+(15651, 250, 582, 7, 0, 0, 1, 'BALCKZONECP_250582'),
+(15652, 250, 568, 7, 0, 0, 1, 'BALCKZONECP_250568'),
+(15653, 250, 554, 7, 0, 0, 1, 'BALCKZONECP_250554'),
+(15654, 250, 540, 7, 0, 0, 1, 'BALCKZONECP_250540'),
+(15655, 250, 526, 7, 0, 0, 1, 'BALCKZONECP_250526'),
+(15656, 250, 512, 7, 0, 0, 1, 'BALCKZONECP_250512'),
+(15657, 250, 498, 7, 0, 0, 1, 'BALCKZONECP_250498'),
+(15658, 250, 484, 7, 0, 0, 1, 'BALCKZONECP_250484');
+INSERT INTO `seatfloor` (`scr_id`, `scr_top`, `scr_left`, `scr_zone_id`, `scr_rowid`, `scr_colid`, `scr_theater_id`, `scr_seatname`) VALUES
+(15659, 340, 300, 3, 0, 0, 1, 'LVL1BX_SDL_R14C11'),
+(15660, 340, 315, 3, 0, 0, 1, 'LVL1BX_SDL_R14C10'),
+(15661, 340, 330, 3, 0, 0, 1, 'LVL1BX_SDL_R14C9'),
+(15662, 340, 345, 3, 0, 0, 1, 'LVL1BX_SDL_R14C8'),
+(15663, 340, 360, 3, 0, 0, 1, 'LVL1BX_SDL_R14C7'),
+(15664, 340, 375, 3, 0, 0, 1, 'LVL1BX_SDL_R14C6'),
+(15665, 340, 390, 3, 0, 0, 1, 'LVL1BX_SDL_R14C5'),
+(15666, 340, 405, 3, 0, 0, 1, 'LVL1BX_SDL_R14C4'),
+(15667, 340, 420, 3, 0, 0, 1, 'LVL1BX_SDL_R14C3'),
+(15668, 340, 435, 3, 0, 0, 1, 'LVL1BX_SDL_R14C2'),
+(15669, 340, 450, 3, 0, 0, 1, 'LVL1BX_SDL_R14C1'),
+(15670, 340, 500, 3, 0, 0, 1, 'LVL1BX_SDR_R14C1'),
+(15671, 340, 515, 3, 0, 0, 1, 'LVL1BX_SDR_R14C2'),
+(15672, 340, 530, 3, 0, 0, 1, 'LVL1BX_SDR_R14C3'),
+(15673, 340, 545, 3, 0, 0, 1, 'LVL1BX_SDR_R14C4'),
+(15674, 340, 560, 3, 0, 0, 1, 'LVL1BX_SDR_R14C5'),
+(15675, 340, 575, 3, 0, 0, 1, 'LVL1BX_SDR_R14C6'),
+(15676, 340, 590, 3, 0, 0, 1, 'LVL1BX_SDR_R14C7'),
+(15677, 340, 605, 3, 0, 0, 1, 'LVL1BX_SDR_R14C8'),
+(15678, 340, 620, 3, 0, 0, 1, 'LVL1BX_SDR_R14C9'),
+(15679, 340, 635, 3, 0, 0, 1, 'LVL1BX_SDR_R14C10'),
+(15680, 340, 650, 3, 0, 0, 1, 'LVL1BX_SDR_R14C11'),
+(15681, 325, 300, 3, 0, 0, 1, 'LVL1BX2_SDL_R14C11'),
+(15682, 325, 315, 3, 0, 0, 1, 'LVL1BX2_SDL_R14C10'),
+(15683, 325, 330, 3, 0, 0, 1, 'LVL1BX2_SDL_R14C9'),
+(15684, 325, 345, 3, 0, 0, 1, 'LVL1BX2_SDL_R14C8'),
+(15685, 325, 360, 3, 0, 0, 1, 'LVL1BX2_SDL_R14C7'),
+(15686, 325, 375, 3, 0, 0, 1, 'LVL1BX2_SDL_R14C6'),
+(15687, 325, 390, 3, 0, 0, 1, 'LVL1BX2_SDL_R14C5'),
+(15688, 325, 405, 3, 0, 0, 1, 'LVL1BX2_SDL_R14C4'),
+(15689, 325, 420, 3, 0, 0, 1, 'LVL1BX2_SDL_R14C3'),
+(15690, 325, 435, 3, 0, 0, 1, 'LVL1BX2_SDL_R14C2'),
+(15691, 325, 450, 3, 0, 0, 1, 'LVL1BX2_SDL_R14C1'),
+(15692, 325, 500, 3, 0, 0, 1, 'LVL1BX2_SDR_R14C1'),
+(15693, 325, 515, 3, 0, 0, 1, 'LVL1BX2_SDR_R14C2'),
+(15694, 325, 530, 3, 0, 0, 1, 'LVL1BX2_SDR_R14C3'),
+(15695, 325, 545, 3, 0, 0, 1, 'LVL1BX2_SDR_R14C4'),
+(15696, 325, 560, 3, 0, 0, 1, 'LVL1BX2_SDR_R14C5'),
+(15697, 325, 575, 3, 0, 0, 1, 'LVL1BX2_SDR_R14C6'),
+(15698, 325, 590, 3, 0, 0, 1, 'LVL1BX2_SDR_R14C7'),
+(15699, 325, 605, 3, 0, 0, 1, 'LVL1BX2_SDR_R14C8'),
+(15700, 325, 620, 3, 0, 0, 1, 'LVL1BX2_SDR_R14C9'),
+(15701, 325, 635, 3, 0, 0, 1, 'LVL1BX2_SDR_R14C10'),
+(15702, 325, 650, 3, 0, 0, 1, 'LVL1BX2_SDR_R14C11'),
+(15703, 300, 300, 4, 0, 0, 1, 'LVLIIBX_SDL_R14C11'),
+(15704, 300, 315, 4, 0, 0, 1, 'LVLIIBX_SDL_R14C10'),
+(15705, 300, 330, 4, 0, 0, 1, 'LVLIIBX_SDL_R14C9'),
+(15706, 300, 345, 4, 0, 0, 1, 'LVLIIBX_SDL_R14C8'),
+(15707, 300, 360, 4, 0, 0, 1, 'LVLIIBX_SDL_R14C7'),
+(15708, 300, 375, 4, 0, 0, 1, 'LVLIIBX_SDL_R14C6'),
+(15709, 300, 390, 4, 0, 0, 1, 'LVLIIBX_SDL_R14C5'),
+(15710, 300, 405, 4, 0, 0, 1, 'LVLIIBX_SDL_R14C4'),
+(15711, 300, 420, 4, 0, 0, 1, 'LVLIIBX_SDL_R14C3'),
+(15712, 300, 435, 4, 0, 0, 1, 'LVLIIBX_SDL_R14C2'),
+(15713, 300, 450, 4, 0, 0, 1, 'LVLIIBX_SDL_R14C1'),
+(15714, 300, 500, 4, 0, 0, 1, 'LVLIIBX_SDR_R14C1'),
+(15715, 300, 515, 4, 0, 0, 1, 'LVLIIBX_SDR_R14C2'),
+(15716, 300, 530, 4, 0, 0, 1, 'LVLIIBX_SDR_R14C3'),
+(15717, 300, 545, 4, 0, 0, 1, 'LVLIIBX_SDR_R14C4'),
+(15718, 300, 560, 4, 0, 0, 1, 'LVLIIBX_SDR_R14C5'),
+(15719, 300, 575, 4, 0, 0, 1, 'LVLIIBX_SDR_R14C6'),
+(15720, 300, 590, 4, 0, 0, 1, 'LVLIIBX_SDR_R14C7'),
+(15721, 300, 605, 4, 0, 0, 1, 'LVLIIBX_SDR_R14C8'),
+(15722, 300, 620, 4, 0, 0, 1, 'LVLIIBX_SDR_R14C9'),
+(15723, 300, 635, 4, 0, 0, 1, 'LVLIIBX_SDR_R14C10'),
+(15724, 300, 650, 4, 0, 0, 1, 'LVLIIBX_SDR_R14C11'),
+(15726, 285, 300, 4, 0, 0, 1, 'LVLIIBX2_SDL_R14C11'),
+(15727, 285, 315, 4, 0, 0, 1, 'LVLIIBX2_SDL_R14C10'),
+(15728, 285, 330, 4, 0, 0, 1, 'LVLIIBX2_SDL_R14C9'),
+(15729, 285, 345, 4, 0, 0, 1, 'LVLIIBX2_SDL_R14C8'),
+(15730, 285, 360, 4, 0, 0, 1, 'LVLIIBX2_SDL_R14C7'),
+(15731, 285, 375, 4, 0, 0, 1, 'LVLIIBX2_SDL_R14C6'),
+(15732, 285, 390, 4, 0, 0, 1, 'LVLIIBX2_SDL_R14C5'),
+(15733, 285, 405, 4, 0, 0, 1, 'LVLIIBX2_SDL_R14C4'),
+(15734, 285, 420, 4, 0, 0, 1, 'LVLIIBX2_SDL_R14C3'),
+(15735, 285, 435, 4, 0, 0, 1, 'LVLIIBX2_SDL_R14C2'),
+(15736, 285, 450, 4, 0, 0, 1, 'LVLIIBX2_SDL_R14C1'),
+(15737, 285, 500, 4, 0, 0, 1, 'LVLIIBX2_SDR_R14C1'),
+(15738, 285, 515, 4, 0, 0, 1, 'LVLIIBX2_SDR_R14C2'),
+(15739, 285, 530, 4, 0, 0, 1, 'LVLIIBX2_SDR_R14C3'),
+(15740, 285, 545, 4, 0, 0, 1, 'LVLIIBX2_SDR_R14C4'),
+(15741, 285, 560, 4, 0, 0, 1, 'LVLIIBX2_SDR_R14C5'),
+(15742, 285, 575, 4, 0, 0, 1, 'LVLIIBX2_SDR_R14C6'),
+(15743, 285, 590, 4, 0, 0, 1, 'LVLIIBX2_SDR_R14C7'),
+(15744, 285, 605, 4, 0, 0, 1, 'LVLIIBX2_SDR_R14C8'),
+(15745, 285, 620, 4, 0, 0, 1, 'LVLIIBX2_SDR_R14C9'),
+(15746, 285, 635, 4, 0, 0, 1, 'LVLIIBX2_SDR_R14C10'),
+(15747, 285, 650, 4, 0, 0, 1, 'LVLIIBX2_SDR_R14C11');
 
 -- --------------------------------------------------------
 
@@ -1288,10 +1633,10 @@ INSERT INTO `seatfloor` (`scr_id`, `scr_top`, `scr_left`, `scr_zone_id`, `scr_ro
 --
 
 CREATE TABLE `theaters` (
-  `tht_id` int(10) UNSIGNED NOT NULL,
+  `tht_id` int UNSIGNED NOT NULL,
   `tht_name` varchar(40) NOT NULL,
   `tht_address` varchar(80) NOT NULL,
-  `tht_active` tinyint(3) UNSIGNED NOT NULL DEFAULT '1'
+  `tht_active` tinyint UNSIGNED NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -1309,7 +1654,7 @@ INSERT INTO `theaters` (`tht_id`, `tht_name`, `tht_address`, `tht_active`) VALUE
 --
 
 CREATE TABLE `types` (
-  `typ_id` tinyint(3) UNSIGNED NOT NULL,
+  `typ_id` tinyint UNSIGNED NOT NULL,
   `typ_title` varchar(12) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -1330,8 +1675,8 @@ INSERT INTO `types` (`typ_id`, `typ_title`) VALUES
 --
 
 CREATE TABLE `zones` (
-  `zon_id` smallint(5) UNSIGNED NOT NULL,
-  `zon_theater_id` int(10) UNSIGNED NOT NULL,
+  `zon_id` smallint UNSIGNED NOT NULL,
+  `zon_theater_id` int UNSIGNED NOT NULL,
   `zon_title` varchar(45) NOT NULL,
   `zon_csscolor` varchar(6) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -1489,97 +1834,97 @@ ALTER TABLE `zones`
 -- AUTO_INCREMENT for table `actors`
 --
 ALTER TABLE `actors`
-  MODIFY `act_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `act_id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `authors`
 --
 ALTER TABLE `authors`
-  MODIFY `aut_id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `aut_id` mediumint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `card_details`
 --
 ALTER TABLE `card_details`
-  MODIFY `crd_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `crd_id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `characters`
 --
 ALTER TABLE `characters`
-  MODIFY `char_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `char_id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `genres`
 --
 ALTER TABLE `genres`
-  MODIFY `gen_id` tinyint(3) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `gen_id` tinyint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `ord_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `ord_id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `order_item`
 --
 ALTER TABLE `order_item`
-  MODIFY `itm_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `itm_id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT for table `people`
 --
 ALTER TABLE `people`
-  MODIFY `ppl_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `ppl_id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `performance`
 --
 ALTER TABLE `performance`
-  MODIFY `per_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `per_id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `performance_dates`
 --
 ALTER TABLE `performance_dates`
-  MODIFY `prd_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `prd_id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `plays`
 --
 ALTER TABLE `plays`
-  MODIFY `ply_id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `ply_id` mediumint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `pricing`
 --
 ALTER TABLE `pricing`
-  MODIFY `pri_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `pri_id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `seatfloor`
 --
 ALTER TABLE `seatfloor`
-  MODIFY `scr_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13863;
+  MODIFY `scr_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15748;
 
 --
 -- AUTO_INCREMENT for table `theaters`
 --
 ALTER TABLE `theaters`
-  MODIFY `tht_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `tht_id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `types`
 --
 ALTER TABLE `types`
-  MODIFY `typ_id` tinyint(3) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `typ_id` tinyint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `zones`
 --
 ALTER TABLE `zones`
-  MODIFY `zon_id` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `zon_id` smallint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- Constraints for dumped tables

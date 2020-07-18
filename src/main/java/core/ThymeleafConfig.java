@@ -1,4 +1,4 @@
-package hello;
+package core;
 
 import java.nio.charset.StandardCharsets;
 import org.springframework.context.annotation.Bean;

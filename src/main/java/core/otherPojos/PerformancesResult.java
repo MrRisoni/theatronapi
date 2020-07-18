@@ -1,12 +1,13 @@
-package hello.otherPojos;
+package core.otherPojos;
 
-import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class PerformancesResult {
 
     private  int theaterId;
-    private BigInteger performanceId;
+    private int performanceId;
     private Short duration;
     private String theaterName;
     private String playName;
@@ -19,6 +20,7 @@ public class PerformancesResult {
     private Double maxPrice;
     private int totalSeats;
     private String authorName;
+    private List<RolePlaying> actors = new ArrayList<>();
 
     public PerformancesResult() {
     }
@@ -71,11 +73,11 @@ public class PerformancesResult {
         this.theaterId = theaterId;
     }
 
-    public BigInteger getPerformanceId() {
+    public int getPerformanceId() {
         return performanceId;
     }
 
-    public void setPerformanceId(BigInteger performanceId) {
+    public void setPerformanceId(int performanceId) {
         this.performanceId = performanceId;
     }
 
@@ -135,5 +137,11 @@ public class PerformancesResult {
         this.totalSeats = totalSeats;
     }
 
+    public List<RolePlaying> getActors() {
+        return actors;
+    }
 
+    public void setActors(List<RolePlaying> actors) {
+        this.actors = actors;
+    }
 }

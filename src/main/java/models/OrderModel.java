@@ -14,7 +14,7 @@ public class OrderModel {
     @Column(name = "ord_id")
     private int id;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn (name="ord_performance_id")
     private PerformanceModel perform;
 

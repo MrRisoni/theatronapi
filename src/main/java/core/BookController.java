@@ -1,11 +1,11 @@
-package hello;
+package core;
 
 import com.google.gson.Gson;
 import models.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import hello.bookPojos.BookPayload;
+import core.bookPojos.BookPayload;
 import docs.PDFGenerator;
 import repos.SprCardDetailsRepository;
 import repos.SprOrderItemRepository;

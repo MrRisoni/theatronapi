@@ -10,11 +10,11 @@ public class PricingModel {
     @Column(name = "pri_id")
     private int id;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn (name="pri_zone_id")
     private ZoneModel zone;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn (name="pri_type_id")
     private TypeModel typ;
 

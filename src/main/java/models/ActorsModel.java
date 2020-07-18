@@ -1,5 +1,7 @@
 package models;
 
+
+
 import javax.persistence.*;
 
 @Entity
@@ -10,14 +12,18 @@ public class ActorsModel {
     @Column(name = "act_id")
     private int id;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn (name="act_people_id")
     private PeopleModel human;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn (name="act_character_id")
     private CharacterModel role;
-  
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn (name="act_performance_id ")
+    private PerformanceModel performObj;
+
     public ActorsModel()
     {}
 
@@ -35,5 +41,21 @@ public class ActorsModel {
   
     public CharacterModel getRole() {
         return role;
+    }
+
+    public void setHuman(PeopleModel human) {
+        this.human = human;
+    }
+
+    public void setRole(CharacterModel role) {
+        this.role = role;
+    }
+
+    public PerformanceModel getPerformObj() {
+        return performObj;
+    }
+
+    public void setPerformObj(PerformanceModel performObj) {
+        this.performObj = performObj;
     }
 }

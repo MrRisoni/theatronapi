@@ -1,4 +1,4 @@
-package hello.bookPojos;
+package core.bookPojos;
 
 public class Performance {
 

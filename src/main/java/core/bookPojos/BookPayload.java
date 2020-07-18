@@ -1,6 +1,4 @@
-package hello.bookPojos;
-
-import java.util.ArrayList;
+package core.bookPojos;
 
 // data posted for Vue.js
 public class BookPayload {

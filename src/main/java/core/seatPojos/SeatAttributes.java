@@ -1,4 +1,4 @@
-package hello.seatPojos;
+package core.seatPojos;
 
 public class SeatAttributes {
 

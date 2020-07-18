@@ -1,4 +1,4 @@
-package hello;
+package core;
 
 
 import java.math.BigDecimal;
@@ -8,7 +8,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import hello.otherPojos.PerformancesResult;
+import core.otherPojos.PerformancesResult;
+import core.otherPojos.RolePlaying;
 import models.HibernateUtil;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -86,7 +87,7 @@ public class PerformancesController {
 
                 prf.setAvgCapacity( 100 * ticketsDouble / seatsDouble );
                 prf.setTheaterId((Integer) obj[2] );
-                prf.setPerformanceId( (BigInteger) obj[3]);
+                prf.setPerformanceId( Integer.parseInt(obj[3].toString()));
                 prf.setDuration( (Short) obj[4]);
                 prf.setTheaterName((String) obj[5]);
                 prf.setFromDate( (Date) obj[6]);
@@ -97,6 +98,16 @@ public class PerformancesController {
                 prf.setMaxPrice(maxPrice.doubleValue());
                 prf.setSeasonId( seasonId.intValue() );
                 prf.setAuthorName( (String) obj[13]);
+
+                List<RolePlaying> aktorsList = HibernateUtil.getEM().createQuery("SELECT " +
+                        "new core.otherPojos.RolePlaying(akt.id, akt.human.fullName,akt.role.name)" +
+                        "FROM ActorsModel akt " +
+                        "JOIN akt.human " +
+                        "JOIN akt.role " +
+                        "JOIN akt.performObj " +
+                        "WHERE akt.performObj.id = :perfid ", RolePlaying.class).setParameter("perfid",prf.getPerformanceId()).getResultList();
+
+                prf.setActors(aktorsList);
 
                 resultList.add(prf);
             }

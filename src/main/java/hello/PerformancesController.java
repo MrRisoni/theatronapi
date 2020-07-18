@@ -10,7 +10,6 @@ import java.util.List;
 
 import hello.otherPojos.PerformancesResult;
 import models.HibernateUtil;
-import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,10 +26,7 @@ public class PerformancesController {
     @RequestMapping(value=  "/api/performances" , method = RequestMethod.GET)
     public List<PerformancesResult> getPerformancesList()
     {
-        Session session = null;
-
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
 
            String q = " SELECT theaterSeats.totalSeats, " +
                    "      AVG(IF ( orderItems.tickets IS NULL,0,orderItems.tickets))  AS totalTickets, " +
@@ -66,8 +62,7 @@ public class PerformancesController {
                    "    WHERE   '" + this.currentDate + "' >= p.per_from_date  AND  p.per_to_date >= '" + this.currentDate + "' " +
                    " GROUP BY prd_performance_id ";
 
-            List<Object[]> data = session.createNativeQuery(q)
-                    .getResultList();
+            List<Object[]> data = HibernateUtil.getEM().createNativeQuery(q).getResultList();
 
             ArrayList<PerformancesResult> resultList = new ArrayList<PerformancesResult>();
             DecimalFormat df = new DecimalFormat("###.###");

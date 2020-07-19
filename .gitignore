@@ -24,3 +24,4 @@ spring_app.log
 *.csv
 *.docs
 *.pdf
+vars_theater_exporter.sh

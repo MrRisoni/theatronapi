@@ -1,0 +1,1 @@
+web: java -jar target/theatronapi-0.4.0.jar

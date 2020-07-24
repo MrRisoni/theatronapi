@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jul 18, 2020 at 02:18 PM
+-- Generation Time: Jul 20, 2020 at 05:31 AM
 -- Server version: 8.0.21
 -- PHP Version: 7.4.7
 
@@ -39,12 +39,8 @@ CREATE TABLE `actors` (
 --
 
 INSERT INTO `actors` (`act_id`, `act_character_id`, `act_performance_id`, `act_people_id`) VALUES
-(1, 1, 1, 1),
-(2, 2, 1, 2),
-(3, 7, 2, 4),
-(4, 8, 2, 5),
-(5, 9, 2, 6),
-(6, 10, 2, 3);
+(1, 2, 1, 1),
+(2, 7, 1, 2);
 
 -- --------------------------------------------------------
 
